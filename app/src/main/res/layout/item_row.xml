@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/iv_item"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:padding="7dp"
+            android:src="@mipmap/contact"
+            app:civ_border_width="0.2dp"
+            app:civ_border_color="#0e0e0e"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_weight="0.7"
+            android:orientation="vertical"
+            android:layout_marginLeft="16dp"
+            android:gravity="center"
+            android:padding="7dp">
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            android:text="assddffd"
+            android:textSize="18sp"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/item_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="94584"
+            android:textSize="14sp"
+            android:textColor="#777777" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="5dp"
+            android:layout_margin="8dp"
+            android:src="@mipmap/edit"
+            android:tint="@android:color/darker_gray"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+</LinearLayout>
