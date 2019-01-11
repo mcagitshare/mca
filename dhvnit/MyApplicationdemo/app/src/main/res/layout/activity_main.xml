@@ -7,6 +7,7 @@
     tools:context=".Activity.MainActivity">
 
     <include
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/toolbar"/>
@@ -17,16 +18,85 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
-    <Button
-        android:id="@+id/btn_contact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:minHeight="45dp"
-        android:minWidth="300dp"
-        android:background="@drawable/gradiant_bar"
-        android:text="Contact"
-        android:textColor="@android:color/white"/>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="8dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_contact"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginRight="10dp"
+                android:minHeight="60dp"
+                android:background="@drawable/gradiant_bar"
+                android:text="Contact"
+                android:textColor="@android:color/white"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:minHeight="60dp"
+                android:minWidth="300dp"
+                android:background="@drawable/gradiant_bar"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="8dp"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginRight="10dp"
+                android:minHeight="60dp"
+                android:background="@drawable/gradiant_bar"
+                android:textColor="@android:color/white"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:minHeight="60dp"
+                android:background="@drawable/gradiant_bar"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="8dp"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginRight="10dp"
+                android:minHeight="60dp"
+                android:background="@drawable/gradiant_bar"
+                android:textColor="@android:color/white"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:minHeight="60dp"
+                android:background="@drawable/gradiant_bar"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
     <Button
         android:visibility="gone"
         android:id="@+id/btn_demo_contact"

@@ -1,10 +1,12 @@
-package com.project.xr.contactsync;
+package com.project.xr.contactsync.Adapter;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.project.xr.contactsync.R;
 
 public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;

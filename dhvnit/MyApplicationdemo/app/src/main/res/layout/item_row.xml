@@ -16,7 +16,6 @@
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:padding="7dp"
-            android:src="@mipmap/contact"
             app:civ_border_width="0.2dp"
             app:civ_border_color="#0e0e0e"/>
 

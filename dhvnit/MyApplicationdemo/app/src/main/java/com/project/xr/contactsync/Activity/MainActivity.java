@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.birbit.android.jobqueue.JobManager;
 import com.project.xr.contactsync.Class.Utils;
@@ -21,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Button btn_contact, btn_demo_contact;
 
-    String url = "http://www.meclubapp.com/public/gw/contact/read.php";
     RealmController realmController;
     JobManager jobManager;
 
@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btn_contact.setOnClickListener(this);
         btn_demo_contact.setOnClickListener(this);
-
     }
 
     private void initView() {
@@ -70,14 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (!TextUtils.isEmpty(txt.getText().toString())) {
                             Utils.counter = Integer.parseInt(txt.getText().toString());
                             dialog.dismiss();
-                            for (int i = 1; i <= Utils.counter; i++) {
-//                                Item item = new Item(i + i + i, "name" + i, "phone" + i, "1");
-//                                RealmClass.Insertdata(realm,item);
-//                                jobManager.addJobInBackground(new ContactJobInsert(
-//                                        String.valueOf()R.mipmap.icon,
-//                                        "Name" + i,
-//                                        "" + i));
-                            }
                             Intent contactIntent = new Intent(MainActivity.this, ContactListActivity.class);
                             startActivity(contactIntent);
                         } else {

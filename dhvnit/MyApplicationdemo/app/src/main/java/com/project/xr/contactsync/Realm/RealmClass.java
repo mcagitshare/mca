@@ -1,4 +1,4 @@
-package com.project.xr.contactsync;
+package com.project.xr.contactsync.Realm;
 
 import android.util.Log;
 
@@ -52,8 +52,8 @@ public class RealmClass {
             realm = Realm.getDefaultInstance();
             list = realm.where(Item.class)
                     .contains(name, search)
-                    .or()
-                    .contains(phone, search)
+//                    .or()
+//                    .contains(phone, search)
                     .findAll();
         } catch (Exception ex) {
             Log.e("TAG", ex.getLocalizedMessage());

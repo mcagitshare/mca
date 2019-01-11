@@ -60,11 +60,11 @@ public class GetTotalCountJob extends Job {
             JSONArray job = new JSONArray(result);
             for (int i = 0; i < job.length(); i++) {
                 JSONObject jsonObject1 = job.getJSONObject(i);
-                count = jsonObject1.getString("contact_count");
+                count = jsonObject1.getString("contact_count").trim();
                 Log.e("count", count + "");
             }
 
-            if (Integer.valueOf(count) != realm.where(Item.class).count()) {
+//            if (Integer.valueOf(count) != realm.where(Item.class).count()) {
                 try {
                     int last = 0;
                     for (int i = 0; i <= Integer.valueOf(count) / 50; i++) {
@@ -81,7 +81,7 @@ public class GetTotalCountJob extends Job {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
+//            }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {

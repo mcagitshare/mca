@@ -56,8 +56,8 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<Item, RecyclerAdap
         Glide.with(activity)
                 .load(obj.getImage())
                 .apply(new RequestOptions()
-                        .placeholder(R.mipmap.contact)
-                        .error(R.mipmap.contact))
+                        .placeholder(null)
+                        .error(null))
                 .into(holder.image);
 
         if (obj.getPhone() != null) {
@@ -108,6 +108,7 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<Item, RecyclerAdap
                 intent.putExtra("name", obj.getName());
                 intent.putExtra("phone", obj.getPhone());
                 intent.putExtra("image", obj.getImage());
+                intent.putExtra("id", obj.getId());
                 activity.startActivity(intent);
             }
         });

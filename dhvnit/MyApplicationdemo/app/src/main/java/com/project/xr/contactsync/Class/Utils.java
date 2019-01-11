@@ -1,6 +1,8 @@
 package com.project.xr.contactsync.Class;
 
 import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -15,5 +17,13 @@ public class Utils {
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void printLog(String receiver, String daily_task) {
+        Log.e(receiver, daily_task);
+    }
+
+    public static void setDailyTask(Context context) {
+
     }
 }

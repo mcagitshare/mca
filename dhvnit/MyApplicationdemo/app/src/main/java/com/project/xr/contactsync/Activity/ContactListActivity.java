@@ -21,8 +21,8 @@ import com.project.xr.contactsync.Constants;
 import com.project.xr.contactsync.DemoApplication;
 import com.project.xr.contactsync.R;
 import com.project.xr.contactsync.Realm.RealmController;
-import com.project.xr.contactsync.RealmClass;
-import com.project.xr.contactsync.SimpleDividerItemDecoration;
+import com.project.xr.contactsync.Realm.RealmClass;
+import com.project.xr.contactsync.Adapter.SimpleDividerItemDecoration;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -33,7 +33,7 @@ public class ContactListActivity extends AppCompatActivity {
     RecyclerAdapter adapter;
     JobManager jobManager;
 //    SearchView SearchView;
-    TextView contacts, noContacts;
+    TextView contacts, noContacts, toolbar_title;
     Toolbar toolbar;
 
     @Override

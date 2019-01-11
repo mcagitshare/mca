@@ -10,7 +10,7 @@ import com.birbit.android.jobqueue.RetryConstraint;
 import com.project.xr.contactsync.Constants;
 import com.project.xr.contactsync.Model.Item;
 import com.project.xr.contactsync.Model.ReqResp;
-import com.project.xr.contactsync.RealmClass;
+import com.project.xr.contactsync.Realm.RealmClass;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -78,10 +78,10 @@ public class ContactJobInsert extends Job {
                     try {
                         JSONObject job = jsonArray.getJSONObject(i);
 
-                        String id = job.getString("id");
-                        String name = job.getString("name");
-                        String image = job.getString("image");
-                        String phone = job.getString("phone");
+                        String id = job.getString("id").trim();
+                        String name = job.getString("name").trim();
+                        String image = job.getString("image").trim();
+                        String phone = job.getString("phone").trim();
 
                         Item item = new Item(id, name, phone, image);
                         RealmClass.Insertdata(realm, item);

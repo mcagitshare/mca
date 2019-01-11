@@ -1,12 +1,17 @@
 package com.project.xr.contactsync;
 
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 import com.birbit.android.jobqueue.JobManager;
 import com.birbit.android.jobqueue.config.Configuration;
+
+import java.util.Calendar;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -27,6 +32,9 @@ public class DemoApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        setDailyTask(getApplicationContext());
+
         Realm.init(this);
         setupUncaughtException();
         final RealmConfiguration realmConfig = new RealmConfiguration.Builder()
@@ -60,4 +68,21 @@ public class DemoApplication extends Application {
             }
         });
     }
+
+    public static void setDailyTask(Context context) {
+        //TEMP FILE
+        Intent intentTempFile = new Intent(context, DailyTaskReceiver.class);
+        intentTempFile.setAction(Constants.RECEIVER_DAILY_TASK_ACTION_SYNC_DATA);
+        boolean isTempFileWorking = (PendingIntent.getBroadcast(context, Constants.RECEIVER_DAILY_TASK, intentTempFile, PendingIntent.FLAG_NO_CREATE) != null);//just changed the flag
+        if (!isTempFileWorking) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 4);
+            calendar.set(Calendar.MINUTE, 0);
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, Constants.RECEIVER_DAILY_TASK, intentTempFile, 0);
+            AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY / 8, pendingIntent);
+        }
+    }
+
 }

@@ -28,6 +28,7 @@ public class RealmController {
     }
 
     public Realm getRealm() {
+        realm.where(Item.class).findAllSorted("name");
         return realm;
     }
 
@@ -36,7 +37,7 @@ public class RealmController {
     }
 
     public RealmResults<Item> getItems() {
-        return realm.where(Item.class).findAll();
+        return realm.where(Item.class).findAllSorted("name");
     }
 
     public long getItemsCount() {
