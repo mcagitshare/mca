@@ -9,6 +9,7 @@ import android.view.View;
 import com.project.xr.contactsync.R;
 
 public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
+
     private Drawable mDivider;
 
     public SimpleDividerItemDecoration(Context context) {

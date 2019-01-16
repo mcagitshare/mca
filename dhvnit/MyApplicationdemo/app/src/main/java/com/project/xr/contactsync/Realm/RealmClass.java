@@ -5,27 +5,12 @@ import android.util.Log;
 import com.project.xr.contactsync.Model.Item;
 import com.project.xr.contactsync.Model.ReqResp;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class RealmClass {
     private static String name = "name";
-    private static String phone = "phone";
-
-    /*public void addData(Realm realm, final String id, final String image, final String edt_name, final String edt_number) {
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Item item = realm.createObject(Item.class,id);
-                item.setName(edt_name);
-                item.setPhone(edt_number);
-                item.setImage(image);
-
-//                DataList dataList = realm.createObject(DataList.class);
-//                item.setDataList(dataList);
-            }
-        });
-    }*/
 
     public static void Insertdata(Realm realm, final Item item) {
         realm.executeTransaction(new Realm.Transaction() {
@@ -51,7 +36,7 @@ public class RealmClass {
         try {
             realm = Realm.getDefaultInstance();
             list = realm.where(Item.class)
-                    .contains(name, search)
+                    .contains(name, search,Case.INSENSITIVE)
 //                    .or()
 //                    .contains(phone, search)
                     .findAll();
@@ -79,16 +64,4 @@ public class RealmClass {
         }
         return reqResps;
     }
-
-   /* public void addCount(Realm realm, int count) {
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Item item = realm.createObject(Item.class);
-
-//                DataList dataList = realm.createObject(DataList.class);
-//                item.setDataList(dataList);
-            }
-        });
-    }*/
 }

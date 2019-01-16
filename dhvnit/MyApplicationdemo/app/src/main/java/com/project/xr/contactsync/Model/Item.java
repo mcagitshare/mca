@@ -26,7 +26,6 @@ public class Item extends RealmObject {
         this.image = image;
     }
 
-
     public String getId() {
         return id;
     }

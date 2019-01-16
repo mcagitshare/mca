@@ -16,13 +16,13 @@ import android.widget.TextView;
 
 import com.birbit.android.jobqueue.JobManager;
 import com.project.xr.contactsync.Adapter.RecyclerAdapter;
+import com.project.xr.contactsync.Adapter.SimpleDividerItemDecoration;
 import com.project.xr.contactsync.Class.Utils;
 import com.project.xr.contactsync.Constants;
 import com.project.xr.contactsync.DemoApplication;
 import com.project.xr.contactsync.R;
-import com.project.xr.contactsync.Realm.RealmController;
 import com.project.xr.contactsync.Realm.RealmClass;
-import com.project.xr.contactsync.Adapter.SimpleDividerItemDecoration;
+import com.project.xr.contactsync.Realm.RealmController;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -32,8 +32,7 @@ public class ContactListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerAdapter adapter;
     JobManager jobManager;
-//    SearchView SearchView;
-    TextView contacts, noContacts, toolbar_title;
+    TextView contacts, noContacts;
     Toolbar toolbar;
 
     @Override
@@ -71,7 +70,6 @@ public class ContactListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         contacts = findViewById(R.id.tv_contacts);
         noContacts = findViewById(R.id.no_contacts);
-//        search = findViewById(R.id.iv_search);
         realmController = RealmController.with(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(ContactListActivity.this));
@@ -83,7 +81,7 @@ public class ContactListActivity extends AppCompatActivity {
                 if (realmController.getItems() != null && realmController.getItems().size() > 0) {
                     noContacts.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
-                    contacts.setText(realmController.getItemsCount() + " "+ Constants.contacts);
+                    contacts.setText(realmController.getItemsCount() + " " + Constants.contacts);
                 } else {
                     noContacts.setVisibility(View.VISIBLE);
                 }
@@ -96,6 +94,7 @@ public class ContactListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
         // Associate searchable configuration with the SearchView
         MenuItem mSearch = menu.findItem(R.id.search);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -130,7 +129,8 @@ public class ContactListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
+
+        //no inspection Simplifiable If Statement
         if (id == R.id.search) {
             return true;
         }
@@ -139,15 +139,6 @@ public class ContactListActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // close search view on back button pressed
-//        if (!SearchView.isIconified()) {
-//            SearchView.setIconified(true);
-//            return;
-//        }
         super.onBackPressed();
     }
 }
-
-
-
-

@@ -35,12 +35,11 @@ public class GetTotalCountJob extends Job {
     @Override
     public void onAdded() {
         jobManager = DemoApplication.getInstance().getJobManager();
-//        realmController = RealmController.with(GetTotalCountJob.this);
-
     }
 
     @Override
     public void onRun() throws Throwable {
+
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
@@ -64,7 +63,7 @@ public class GetTotalCountJob extends Job {
                 Log.e("count", count + "");
             }
 
-//            if (Integer.valueOf(count) != realm.where(Item.class).count()) {
+            if (Integer.valueOf(count) != realm.where(Item.class).count()) {
                 try {
                     int last = 0;
                     for (int i = 0; i <= Integer.valueOf(count) / 50; i++) {
@@ -72,16 +71,11 @@ public class GetTotalCountJob extends Job {
                         last++;
                         jobManager.addJobInBackground(new ContactJobInsert(last));
                     }
-
-                    /*if (Integer.valueOf(count) % 50 != 0) {
-                        jobManager.addJobInBackground(new ContactJobInsert(last + 1));
-                    }*/
-
                     Log.e("result", result);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-//            }
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -93,7 +87,6 @@ public class GetTotalCountJob extends Job {
 
     @Override
     protected void onCancel(int cancelReason, @Nullable Throwable throwable) {
-
     }
 
     @Override

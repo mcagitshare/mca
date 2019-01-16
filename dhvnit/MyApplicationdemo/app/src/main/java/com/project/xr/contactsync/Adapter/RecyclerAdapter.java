@@ -34,7 +34,6 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<Item, RecyclerAdap
         this.activity = activity;
     }
 
-
     public void refreshData() {
         this.notifyDataSetChanged();
     }

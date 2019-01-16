@@ -33,12 +33,14 @@ public class ContactJobInsert extends Job {
     private long requestTime = 0, responseTime = 0;
 
     public ContactJobInsert(int batchid) {
+
         super(new Params(1).requireNetwork());
         this.batchid = batchid;
     }
 
     @Override
     public void onAdded() {
+
         //realm insert
         Realm realm = null;
         try {
@@ -54,7 +56,6 @@ public class ContactJobInsert extends Job {
                 realm.close();
             }
         }
-
     }
 
     @Override
@@ -104,6 +105,7 @@ public class ContactJobInsert extends Job {
     }
 
     private String getContacts(int batchid) {
+
         String result = null;
         try {
             HttpClient httpclient = new DefaultHttpClient();
@@ -138,8 +140,6 @@ public class ContactJobInsert extends Job {
     @Override
     protected RetryConstraint shouldReRunOnThrowable(@NonNull Throwable throwable, int runCount, int maxRunCount) {
         // if onRun method getting error then call this method
-
         return null;
     }
-
 }

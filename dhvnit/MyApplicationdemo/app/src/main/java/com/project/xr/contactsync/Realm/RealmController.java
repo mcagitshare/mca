@@ -17,6 +17,7 @@ public class RealmController {
     }
 
     public static RealmController with(Activity activity) {
+
         if (instance == null) {
             instance = new RealmController(activity.getApplication());
         }
@@ -44,22 +45,8 @@ public class RealmController {
         return realm.where(Item.class).count();
     }
 
-    /*public void addItem(final String edt_name, final String edt_number, final String edt_grade) {
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                String key = UUID.randomUUID().toString();
-                Item item = realm.createObject(Item.class, key);
-                item.setName(edt_name);
-                item.setPhone(edt_number);
-                DataList dataList = realm.createObject(DataList.class);
-                dataList.setGrade(edt_grade);
-                item.setDataList(dataList);
-            }
-        });
-    }*/
-
     public void editItem(final String itemId, final String name, final String number) {
+
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -71,6 +58,7 @@ public class RealmController {
     }
 
     public void deleteItem(final String itemId) {
+
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {

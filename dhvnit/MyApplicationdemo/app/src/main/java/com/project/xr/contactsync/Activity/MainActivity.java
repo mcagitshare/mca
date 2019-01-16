@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.birbit.android.jobqueue.JobManager;
 import com.project.xr.contactsync.Class.Utils;
@@ -27,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -54,8 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+
         int id = view.getId();
+
         switch (id) {
+
             case R.id.btn_demo_contact:
                 final Dialog dialog = new Dialog(MainActivity.this);
                 dialog.setContentView(R.layout.dialog);

@@ -7,16 +7,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 import com.birbit.android.jobqueue.JobManager;
 import com.birbit.android.jobqueue.config.Configuration;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class DemoApplication extends Application {
+
     private static DemoApplication instance;
     JobManager jobManager;
 
@@ -26,6 +29,23 @@ public class DemoApplication extends Application {
 
     public static DemoApplication getInstance() {
         return instance;
+    }
+
+    public static void setDailyTask(Context context) {
+
+        //Every 4 hour data refreshed from the url
+        Intent intentTempFile = new Intent(context, DailyTaskReceiver.class);
+        intentTempFile.setAction(Constants.RECEIVER_DAILY_TASK_ACTION_SYNC_DATA);
+        boolean isTempFileWorking = (PendingIntent.getBroadcast(context, Constants.RECEIVER_DAILY_TASK, intentTempFile, PendingIntent.FLAG_NO_CREATE) != null);//just changed the flag
+        if (!isTempFileWorking) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 4);
+            calendar.set(Calendar.MINUTE, 0);
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, Constants.RECEIVER_DAILY_TASK, intentTempFile, 0);
+            AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY / 4, pendingIntent);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -64,25 +84,7 @@ public class DemoApplication extends Application {
                 startActivity(intent);
                 android.os.Process.killProcess(android.os.Process.myPid());
                 System.exit(0);
-
             }
         });
     }
-
-    public static void setDailyTask(Context context) {
-        //TEMP FILE
-        Intent intentTempFile = new Intent(context, DailyTaskReceiver.class);
-        intentTempFile.setAction(Constants.RECEIVER_DAILY_TASK_ACTION_SYNC_DATA);
-        boolean isTempFileWorking = (PendingIntent.getBroadcast(context, Constants.RECEIVER_DAILY_TASK, intentTempFile, PendingIntent.FLAG_NO_CREATE) != null);//just changed the flag
-        if (!isTempFileWorking) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 4);
-            calendar.set(Calendar.MINUTE, 0);
-
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, Constants.RECEIVER_DAILY_TASK, intentTempFile, 0);
-            AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY / 8, pendingIntent);
-        }
-    }
-
 }
