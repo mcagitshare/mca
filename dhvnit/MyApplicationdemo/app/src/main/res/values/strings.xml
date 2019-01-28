@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Contact Sync</string>
     <string name="contact_details">Contact Details</string>
+
+    <string name="btn_next">Next</string>
+    <string name="btn_close">Close</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_ok">Ok</string>
+
+    <string name="hint_email">Email Address</string>
+    <string name="hint_otp">OTP</string>
+    <string name="sign_in_completed_successfully_with_mail_id_email_id">Sign in completed successfully with mail id></string>
+    <string name="email_id_already_registered_with_other_device_nproceed_to_re_register">already registered with other device.  Proceed to re-register?></string>
 </resources>

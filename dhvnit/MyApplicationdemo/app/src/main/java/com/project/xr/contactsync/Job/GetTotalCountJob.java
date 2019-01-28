@@ -49,7 +49,7 @@ public class GetTotalCountJob extends Job {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("result_type", "rec_count");
 
-            HttpPost httpPost = new HttpPost(Constants.url);
+            HttpPost httpPost = new HttpPost(Constants.urlReadData);
             httpPost.setEntity(new StringEntity(jsonObject.toString(), "UTF-8"));
             httpPost.setHeader("Content-type", "application/json");
             HttpResponse response = httpclient.execute(httpPost);

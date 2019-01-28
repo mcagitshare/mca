@@ -116,20 +116,18 @@ public class ContactJobInsert extends Job {
             block.put("block_id", batchid);
             jsonObject.put("block", block);
 
-            HttpPost httpPost = new HttpPost(Constants.url);
+            HttpPost httpPost = new HttpPost(Constants.urlReadData);
             httpPost.setEntity(new StringEntity(jsonObject.toString(), "UTF-8"));
             httpPost.setHeader("Content-type", "application/json");
             HttpResponse response = httpclient.execute(httpPost);
 
             result = EntityUtils.toString(response.getEntity());
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
     }
-
 
     @Override
     protected void onCancel(int cancelReason, @Nullable Throwable throwable) {

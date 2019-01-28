@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initView();
 
+        Intent intent = getIntent();
+
         btn_contact.setOnClickListener(this);
         btn_demo_contact.setOnClickListener(this);
     }
