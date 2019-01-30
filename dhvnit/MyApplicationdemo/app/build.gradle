@@ -47,5 +47,9 @@ dependencies {
     compile 'org.apache.httpcomponents:httpcore:4.4.1'
     compile 'org.apache.httpcomponents:httpclient:4.5'
 
+    compile 'org.igniterealtime.smack:smack-android:4.3.0'
+    compile 'org.igniterealtime.smack:smack-tcp:4.3.0'
+    compile 'org.igniterealtime.smack:smack-im:4.3.0'
+    compile 'org.igniterealtime.smack:smack-android-extensions:4.3.0'
 }
 apply plugin: 'realm-android'
