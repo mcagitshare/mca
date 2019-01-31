@@ -1,5 +1,6 @@
 package com.mca.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -68,23 +69,9 @@ public class SignInActivity extends AppCompatActivity {
 
         if (Utils.getInPrefs(SignInActivity.this, Utils.Login)) {
 
-            String domain = Utils.getRequestPayloadData(this, Utils.messageserver);
-            String regid = Utils.getRequestPayloadData(this, Utils.regid);
-            int port = Integer.parseInt(Utils.getRequestPayloadData(this, Utils.messageserverport));
-            String crc = Utils.getRequestPayloadData(this, Utils.crc);
+            AsyncTaskRunner1 runner1 = new AsyncTaskRunner1();
+            runner1.execute();
 
-            XMPPConnection connection = GetXmppConnection.getConnection(domain, port);
-            try {
-
-                ((XMPPTCPConnection) connection).login(regid, crc);
-
-            } catch (XMPPException
-                    | SmackException
-                    | IOException
-                    | InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else if (Utils.getInPrefs(this, Utils.Login)) {
             intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -120,6 +107,30 @@ public class SignInActivity extends AppCompatActivity {
     private void findViewId() {
         btn_next = findViewById(R.id.sign_in_next);
         et_email = findViewById(R.id.et_email);
+    }
+
+    private class AsyncTaskRunner1 extends AsyncTask{
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            String domain = Utils.getRequestPayloadData(SignInActivity.this, Utils.messageserver);
+            String regid = Utils.getRequestPayloadData(SignInActivity.this, Utils.regid);
+            int port = Integer.parseInt(Utils.getRequestPayloadData(SignInActivity.this, Utils.messageserverport));
+            String crc = Utils.getRequestPayloadData(SignInActivity.this, Utils.crc);
+
+            XMPPConnection connection = GetXmppConnection.getConnection(domain, port);
+            try {
+
+                ((XMPPTCPConnection) connection).login(regid, crc);
+                Utils.printLog("XMPP connection", connection.isConnected() + "");
+
+            } catch (XMPPException
+                    | SmackException
+                    | IOException
+                    | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {

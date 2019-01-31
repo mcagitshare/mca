@@ -10,16 +10,16 @@
     tools:showIn="@layout/activity_main">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:visibility="gone"
+        android:id="@+id/rv_messages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"/>
     <TextView
-        android:visibility="gone"
         android:id="@+id/no_contacts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/no_contacts_found"
+        android:text="@string/no_messages_found"
         android:textSize="19sp"
         android:gravity="center"/>
 </LinearLayout>

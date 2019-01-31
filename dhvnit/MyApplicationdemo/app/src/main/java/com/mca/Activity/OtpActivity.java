@@ -1,8 +1,10 @@
 package com.mca.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -149,17 +151,9 @@ public class OtpActivity extends AppCompatActivity {
                     Utils.storeRequestPayloadData(OtpActivity.this, Utils.messageserver, job.getString("messageserver"));
                     Utils.storeRequestPayloadData(OtpActivity.this, Utils.messageserverport, job.getString("messageserverport"));
 
-                    XMPPConnection connection = GetXmppConnection.getConnection(job.getString("messageserver"), Integer.parseInt(job.getString("messageserverport")));
-                    try {
+                    AsyncTaskRunner1 runner = new AsyncTaskRunner1();
+                    runner.execute();
 
-                        ((XMPPTCPConnection) connection).login(job.getString("regid"), job.getString("crc"));
-
-                    } catch (XMPPException
-                            | SmackException
-                            | IOException
-                            | InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 } else {
                     message = job.getString("message");
                     resolve = job.getString("resolve");
@@ -192,6 +186,33 @@ public class OtpActivity extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(String... text) {
+        }
+    }
+
+    private class AsyncTaskRunner1 extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            XMPPConnection connection = GetXmppConnection.getConnection
+                    (
+                            Utils.getRequestPayloadData(OtpActivity.this, Utils.messageserver),
+                            Integer.parseInt(Utils.getRequestPayloadData(OtpActivity.this, Utils.messageserverport))
+                    );
+            try {
+
+                ((XMPPTCPConnection) connection).login
+                        (
+                                Utils.getRequestPayloadData(OtpActivity.this, Utils.regid),
+                                Utils.getRequestPayloadData(OtpActivity.this, Utils.crc)
+                        );
+                Utils.printLog("XMPP connection", connection.isConnected() + "");
+
+            } catch (XMPPException
+                    | SmackException
+                    | IOException
+                    | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
     }
 }

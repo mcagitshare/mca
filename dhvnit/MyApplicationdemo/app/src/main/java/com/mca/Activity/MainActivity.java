@@ -19,7 +19,7 @@ import com.mca.Realm.RealmController;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btn_contact, btn_demo_contact;
+    Button btn_contact, btn_demo_contact, btn_model;
 
     RealmController realmController;
     JobManager jobManager;
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
 
         btn_contact.setOnClickListener(this);
+        btn_model.setOnClickListener(this);
         btn_demo_contact.setOnClickListener(this);
     }
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btn_demo_contact = findViewById(R.id.btn_demo_contact);
         btn_contact = findViewById(R.id.btn_contact);
+        btn_model = findViewById(R.id.btn_model);
 
         realmController = RealmController.with(this);
     }
@@ -89,6 +91,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(this, ContactListActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.btn_model:
+                intent = new Intent(this, MessagesEventsContactsActivity.class);
+                startActivity(intent);
         }
     }
 }

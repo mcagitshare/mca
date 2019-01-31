@@ -26,20 +26,21 @@ public class GetXmppConnection {
             connconfig.setXmppDomain(domain);
             connconfig.setPort(port);
             connconfig.setSecurityMode(SecurityMode.disabled);
+            connconfig.setHost(domain);
             connconfig.setSendPresence(true);
             // connconfig.enableDefaultDebugger();
 
             connconfig.setCompressionEnabled(true);
 
-            SASLMechanism mechanism = new SASLPlainMechanism();
-            SASLAuthentication.registerSASLMechanism(mechanism);
-            SASLAuthentication.blacklistSASLMechanism("SCRAM-SHA-1");
-            SASLAuthentication.blacklistSASLMechanism("DIGEST-MD5");
+//            SASLMechanism mechanism = new SASLPlainMechanism();
+//            SASLAuthentication.registerSASLMechanism(mechanism);
+//            SASLAuthentication.blacklistSASLMechanism("SCRAM-SHA-1");
+//            SASLAuthentication.blacklistSASLMechanism("DIGEST-MD5");
 
             connection = new XMPPTCPConnection(connconfig.build());
             connection.setReplyTimeout(connectTimeout);
-            connection.connect();
             connection.addConnectionListener(new ConncetionListner());
+            connection.connect();
             connection.addAsyncStanzaListener(new MessageListner(), new MessageListner());
         } catch (InterruptedException
                 | XMPPException
@@ -49,5 +50,4 @@ public class GetXmppConnection {
         }
         return connection;
     }
-
 }

@@ -12,28 +12,29 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name="com.mca.Application.DemoApplication"
+        android:name=".Application.DemoApplication"
         android:icon="@mipmap/contact"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/contact"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.mca.Activity.SignInActivity">
+        <activity android:name=".Activity.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.mca.Activity.ContactListActivity" />
-        <activity android:name="com.mca.Activity.ContactDetials" />
-        <activity android:name="com.mca.ExceptionHandlerActivity" />
-        <activity android:name="com.mca.Activity.MainActivity" />
-        <activity android:name="com.mca.Activity.OtpActivity" />
-        <activity android:name="com.mca.Activity.SuccessfulLogin" />
-        <activity android:name="com.mca.Activity.AlreadySigninActivity"></activity>
+        <activity android:name=".Activity.ContactListActivity" />
+        <activity android:name=".Activity.ContactDetials" />
+        <activity android:name=".ExceptionHandlerActivity" />
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.OtpActivity" />
+        <activity android:name=".Activity.SuccessfulLogin" />
+        <activity android:name=".Activity.AlreadySigninActivity" />
+        <activity android:name=".Activity.MessagesEventsContactsActivity"></activity>
     </application>
 
 </manifest>

@@ -38,11 +38,13 @@
                 android:text="Contact"
                 android:textColor="@android:color/white"/>
             <Button
+                android:id="@+id/btn_model"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:minHeight="60dp"
                 android:minWidth="300dp"
+                android:text="model"
                 android:background="@drawable/gradiant_bar"
                 android:textColor="@android:color/white"/>
         </LinearLayout>
