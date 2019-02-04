@@ -1,6 +1,7 @@
 package com.mca.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -51,6 +52,12 @@ public class OtpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
 
+        if (!Utils.isNetworkAvailable(this)) {
+            Intent intent = new Intent(this, NoInternetConnection.class);
+            startActivityForResult(intent, 1);
+            finish();
+        }
+
         findViewId();
 
         Intent intent = getIntent();
@@ -68,11 +75,24 @@ public class OtpActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!Utils.isNetworkAvailable(OtpActivity.this)){
+                    Intent intent = new Intent(OtpActivity.this, NoInternetConnection.class);
+                    startActivityForResult(intent, 1);
+                }
                 OtpActivity.AsyncTaskRunner runner = new AsyncTaskRunner();
                 runner.execute();
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+            }
+        }
+    }//onActivityResult
 
     private void findViewId() {
         btn_next = findViewById(R.id.otp_next);
@@ -82,6 +102,10 @@ public class OtpActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        if (!Utils.isNetworkAvailable(this)){
+            Intent intent = new Intent(this, NoInternetConnection.class);
+            startActivityForResult(intent, 1);
+        }
         super.onResume();
     }
 
@@ -93,6 +117,7 @@ public class OtpActivity extends AppCompatActivity {
     private class AsyncTaskRunner extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
 
+        @SuppressLint("WrongThread")
         @Override
         protected String doInBackground(String... params) {
             String result = "";
@@ -168,6 +193,7 @@ public class OtpActivity extends AppCompatActivity {
 
                     Intent mainIntent = new Intent(OtpActivity.this, MainActivity.class);
                     mainIntent.putExtra("email_id", email_id);
+                    Toast.makeText(OtpActivity.this, "Registration completed successfully", Toast.LENGTH_SHORT).show();
                     startActivity(mainIntent);
                     finish();
                 } else {
@@ -201,8 +227,9 @@ public class OtpActivity extends AppCompatActivity {
 
                 ((XMPPTCPConnection) connection).login
                         (
-                                Utils.getRequestPayloadData(OtpActivity.this, Utils.regid),
-                                Utils.getRequestPayloadData(OtpActivity.this, Utils.crc)
+                                "guest", "Guest1234"
+/*                                Utils.getRequestPayloadData(OtpActivity.this, Utils.regid),
+                                Utils.getRequestPayloadData(OtpActivity.this, Utils.crc)*/
                         );
                 Utils.printLog("XMPP connection", connection.isConnected() + "");
 

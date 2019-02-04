@@ -20,6 +20,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Activity.NoInternetConnection"></activity>
         <activity android:name=".Activity.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +35,7 @@
         <activity android:name=".Activity.OtpActivity" />
         <activity android:name=".Activity.SuccessfulLogin" />
         <activity android:name=".Activity.AlreadySigninActivity" />
-        <activity android:name=".Activity.MessagesEventsContactsActivity"></activity>
+        <activity android:name=".Activity.MessagesEventsContactsActivity" />
     </application>
 
 </manifest>

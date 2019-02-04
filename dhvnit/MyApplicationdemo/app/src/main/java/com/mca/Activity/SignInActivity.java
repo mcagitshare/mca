@@ -1,6 +1,7 @@
 package com.mca.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.mca.Application.DemoApplication;
 import com.mca.Utils.Utils;
 import com.mca.Utils.Constants;
 import com.mca.R;
@@ -67,6 +69,11 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        if (!Utils.isNetworkAvailable(SignInActivity.this)){
+            intent = new Intent(SignInActivity.this, NoInternetConnection.class);
+            startActivityForResult(intent, 1);
+        }
+
         if (Utils.getInPrefs(SignInActivity.this, Utils.Login)) {
 
             AsyncTaskRunner1 runner1 = new AsyncTaskRunner1();
@@ -84,9 +91,21 @@ public class SignInActivity extends AppCompatActivity {
         findViewId();
 
         IMEI = Utils.getRequestPayloadData(this, Utils.IMEI);
+        if (IMEI == null)
+            IMEI = "0";
+
         MSISDN = Utils.getRequestPayloadData(this, Utils.MSISDN);
+        if (MSISDN == null)
+            MSISDN = "0";
+
         MAC_id = Utils.getRequestPayloadData(this, Utils.MAC_id);
+        if (MAC_id == null)
+            MAC_id = "0";
+
         country = Utils.getRequestPayloadData(this, Utils.country);
+        if (country == null)
+            country = "India";
+
         device_type = Utils.getRequestPayloadData(this, Utils.device_type);
         device_serial_no = Utils.getRequestPayloadData(this, Utils.device_serial_no);
         device_os_type = Utils.getRequestPayloadData(this, Utils.device_os_type);
@@ -95,21 +114,34 @@ public class SignInActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (isValidEmail(EmailID)) {
-                AsyncTaskRunner runner = new AsyncTaskRunner();
-                runner.execute();
-//                } else
-//                    Toast.makeText(SignInActivity.this, "Please Enter Valid Email Address", Toast.LENGTH_SHORT).show();
+                if (!Utils.isNetworkAvailable(SignInActivity.this)){
+                    intent = new Intent(SignInActivity.this, NoInternetConnection.class);
+                    startActivityForResult(intent, 1);
+                }
+                if (isValidEmail(et_email.getText().toString())) {
+                    AsyncTaskRunner runner = new AsyncTaskRunner();
+                    runner.execute();
+                } else
+                    Toast.makeText(SignInActivity.this, "Please Enter Valid Email Address", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+            }
+        }
+    }//onActivityResult
 
     private void findViewId() {
         btn_next = findViewById(R.id.sign_in_next);
         et_email = findViewById(R.id.et_email);
     }
 
-    private class AsyncTaskRunner1 extends AsyncTask{
+    private class AsyncTaskRunner1 extends AsyncTask {
         @Override
         protected Object doInBackground(Object[] objects) {
             String domain = Utils.getRequestPayloadData(SignInActivity.this, Utils.messageserver);
@@ -120,7 +152,7 @@ public class SignInActivity extends AppCompatActivity {
             XMPPConnection connection = GetXmppConnection.getConnection(domain, port);
             try {
 
-                ((XMPPTCPConnection) connection).login(regid, crc);
+                ((XMPPTCPConnection) connection).login("guest", "Guest1234");
                 Utils.printLog("XMPP connection", connection.isConnected() + "");
 
             } catch (XMPPException
@@ -137,6 +169,7 @@ public class SignInActivity extends AppCompatActivity {
 
         ProgressDialog progressDialog;
 
+        @SuppressLint("WrongThread")
         @Override
         protected String doInBackground(String... params) {
 
@@ -153,13 +186,16 @@ public class SignInActivity extends AppCompatActivity {
 
                 JSONObject json = new JSONObject();
                 json.put("email", et_email.getText().toString());
-                json.put("name", "hiren");
+                String Email = et_email.getText().toString();
+                String  name   = Email.substring(0, Email.lastIndexOf("@"));
+
+                json.put("name", name);
 
                 JSONObject json_device_properties = new JSONObject();
-                json_device_properties.put("msisdn", "ADH0068");
+                json_device_properties.put("msisdn", MSISDN);
                 json_device_properties.put("imei", IMEI);
                 json_device_properties.put("mac_id", MAC_id);
-                json_device_properties.put("country", "India");
+                json_device_properties.put("country", country);
                 json_device_properties.put("devicetype", device_type);
                 json_device_properties.put("deviceserialno", device_serial_no);
                 json_device_properties.put("deviceostype", device_os_type);
@@ -193,23 +229,17 @@ public class SignInActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            if (et_email.length() == 0) {
-                Toast.makeText(SignInActivity.this, "Please enter Email Address", Toast.LENGTH_SHORT).show();
-            } else {
-                if (responseCode == HttpsURLConnection.HTTP_OK) {
-                    intent = new Intent(SignInActivity.this, OtpActivity.class);
-                    intent.putExtra("email_id", et_email.getText().toString());
-                    startActivity(intent);
-                    finish();
-                } else if (responseCode == HttpsURLConnection.HTTP_PAYMENT_REQUIRED) {
-                    intent = new Intent(SignInActivity.this, AlreadySigninActivity.class);
-                    intent.putExtra("email_id", et_email.getText().toString());
-                    startActivity(intent);
-                    finish();
-                }
-            }/* else {
-                Toast.makeText(SignInActivity.this, "Error: " + responseCode, Toast.LENGTH_SHORT).show();
-            }*/
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+                intent = new Intent(SignInActivity.this, OtpActivity.class);
+                intent.putExtra("email_id", et_email.getText().toString());
+                startActivity(intent);
+                finish();
+            } else if (responseCode == HttpsURLConnection.HTTP_PAYMENT_REQUIRED) {
+                intent = new Intent(SignInActivity.this, AlreadySigninActivity.class);
+                intent.putExtra("email_id", et_email.getText().toString());
+                startActivity(intent);
+                finish();
+            }
         }
 
         @Override
@@ -222,6 +252,7 @@ public class SignInActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... text) {
         }
+
     }
 
     public static boolean isValidEmail(CharSequence target) {
@@ -230,6 +261,10 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        if (!Utils.isNetworkAvailable(this)){
+            intent = new Intent(this, NoInternetConnection.class);
+            startActivityForResult(intent, 1);
+        }
         super.onResume();
     }
 

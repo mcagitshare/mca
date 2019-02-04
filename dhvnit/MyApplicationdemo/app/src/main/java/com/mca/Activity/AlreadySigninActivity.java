@@ -1,6 +1,7 @@
 package com.mca.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -45,6 +46,12 @@ public class AlreadySigninActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_already_signin);
 
+        if (!Utils.isNetworkAvailable(this)) {
+            Intent intent = new Intent(this, NoInternetConnection.class);
+            startActivityForResult(intent, 1);
+            finish();
+        }
+
         IMEI = Utils.getRequestPayloadData(this, Utils.IMEI);
         MSISDN = Utils.getRequestPayloadData(this, Utils.MSISDN);
         MAC_id = Utils.getRequestPayloadData(this, Utils.MAC_id);
@@ -66,6 +73,10 @@ public class AlreadySigninActivity extends AppCompatActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!Utils.isNetworkAvailable(AlreadySigninActivity.this)) {
+                    Intent intent = new Intent(AlreadySigninActivity.this, NoInternetConnection.class);
+                    startActivityForResult(intent, 1);
+                }
                 AlreadySigninActivity.AsyncTaskRunner runner = new AsyncTaskRunner();
                 runner.execute();
             }
@@ -80,7 +91,20 @@ public class AlreadySigninActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+            }
+        }
+    }//onActivityResult
+
+    @Override
     protected void onResume() {
+        if (!Utils.isNetworkAvailable(this)) {
+            Intent intent = new Intent(this, NoInternetConnection.class);
+            startActivityForResult(intent, 1);
+        }
         super.onResume();
     }
 
