@@ -32,10 +32,10 @@ public class GetXmppConnection {
 
             connconfig.setCompressionEnabled(true);
 
-//            SASLMechanism mechanism = new SASLPlainMechanism();
-//            SASLAuthentication.registerSASLMechanism(mechanism);
-//            SASLAuthentication.blacklistSASLMechanism("SCRAM-SHA-1");
-//            SASLAuthentication.blacklistSASLMechanism("DIGEST-MD5");
+            SASLMechanism mechanism = new SASLPlainMechanism();
+            SASLAuthentication.registerSASLMechanism(mechanism);
+            SASLAuthentication.blacklistSASLMechanism("SCRAM-SHA-1");
+            SASLAuthentication.blacklistSASLMechanism("DIGEST-MD5");
 
             connection = new XMPPTCPConnection(connconfig.build());
             connection.setReplyTimeout(connectTimeout);

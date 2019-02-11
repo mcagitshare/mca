@@ -75,7 +75,7 @@ public class OtpActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Utils.isNetworkAvailable(OtpActivity.this)){
+                if (!Utils.isNetworkAvailable(OtpActivity.this)) {
                     Intent intent = new Intent(OtpActivity.this, NoInternetConnection.class);
                     startActivityForResult(intent, 1);
                 }
@@ -102,7 +102,7 @@ public class OtpActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        if (!Utils.isNetworkAvailable(this)){
+        if (!Utils.isNetworkAvailable(this)) {
             Intent intent = new Intent(this, NoInternetConnection.class);
             startActivityForResult(intent, 1);
         }
@@ -224,12 +224,10 @@ public class OtpActivity extends AppCompatActivity {
                             Integer.parseInt(Utils.getRequestPayloadData(OtpActivity.this, Utils.messageserverport))
                     );
             try {
-
                 ((XMPPTCPConnection) connection).login
                         (
-                                "guest", "Guest1234"
-/*                                Utils.getRequestPayloadData(OtpActivity.this, Utils.regid),
-                                Utils.getRequestPayloadData(OtpActivity.this, Utils.crc)*/
+                                Utils.getRequestPayloadData(OtpActivity.this, Utils.regid),
+                                Utils.getRequestPayloadData(OtpActivity.this, Utils.crc)
                         );
                 Utils.printLog("XMPP connection", connection.isConnected() + "");
 

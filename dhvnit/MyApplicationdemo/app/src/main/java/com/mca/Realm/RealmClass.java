@@ -60,7 +60,7 @@ public class RealmClass {
             Log.e("TAG", ex.getLocalizedMessage());
         } finally {
             if (realm != null) {
-                realm.close();
+//                realm.close();
             }
         }
         return reqResps;

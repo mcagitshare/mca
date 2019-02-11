@@ -53,7 +53,7 @@ public class ContactJobInsert extends Job {
             e.printStackTrace();
         } finally {
             if (realm != null) {
-//                realm.close();
+                realm.close();
             }
         }
     }
@@ -98,7 +98,7 @@ public class ContactJobInsert extends Job {
 
             } finally {
                 if (realm != null) {
-//                    realm.close();
+                    realm.close();
                 }
             }
         }

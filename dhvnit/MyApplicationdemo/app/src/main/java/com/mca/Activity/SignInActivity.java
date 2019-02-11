@@ -69,7 +69,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        if (!Utils.isNetworkAvailable(SignInActivity.this)){
+        if (!Utils.isNetworkAvailable(SignInActivity.this)) {
             intent = new Intent(SignInActivity.this, NoInternetConnection.class);
             startActivityForResult(intent, 1);
         }
@@ -114,7 +114,7 @@ public class SignInActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Utils.isNetworkAvailable(SignInActivity.this)){
+                if (!Utils.isNetworkAvailable(SignInActivity.this)) {
                     intent = new Intent(SignInActivity.this, NoInternetConnection.class);
                     startActivityForResult(intent, 1);
                 }
@@ -131,7 +131,7 @@ public class SignInActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
             }
         }
     }//onActivityResult
@@ -151,10 +151,9 @@ public class SignInActivity extends AppCompatActivity {
 
             XMPPConnection connection = GetXmppConnection.getConnection(domain, port);
             try {
-
-                ((XMPPTCPConnection) connection).login("guest", "Guest1234");
-                Utils.printLog("XMPP connection", connection.isConnected() + "");
-
+                ((XMPPTCPConnection) connection).login(regid, crc);
+                Utils.printLog("user name and pasword", regid + "\n" + crc);
+                Utils.printLog("XMPP connection", connection.isAuthenticated() + "");
             } catch (XMPPException
                     | SmackException
                     | IOException
@@ -187,7 +186,7 @@ public class SignInActivity extends AppCompatActivity {
                 JSONObject json = new JSONObject();
                 json.put("email", et_email.getText().toString());
                 String Email = et_email.getText().toString();
-                String  name   = Email.substring(0, Email.lastIndexOf("@"));
+                String name = Email.substring(0, Email.lastIndexOf("@"));
 
                 json.put("name", name);
 
@@ -261,7 +260,7 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        if (!Utils.isNetworkAvailable(this)){
+        if (!Utils.isNetworkAvailable(this)) {
             intent = new Intent(this, NoInternetConnection.class);
             startActivityForResult(intent, 1);
         }
