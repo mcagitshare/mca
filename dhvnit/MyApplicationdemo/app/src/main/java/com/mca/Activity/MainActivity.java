@@ -33,6 +33,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initView();
 
+        Utils.printLog("Login Data",
+                "regid" + Utils.getRequestPayloadData(MainActivity.this, Utils.regid) + "/" +
+                        "crc" + Utils.getRequestPayloadData(MainActivity.this, Utils.crc) + "/" +
+                        "messageserver" + Utils.getRequestPayloadData(MainActivity.this, Utils.messageserver) + "/" +
+                        "mesageserverport" + Utils.getRequestPayloadData(MainActivity.this, Utils.messageserverport));
+
         btn_contact.setOnClickListener(this);
         btn_model.setOnClickListener(this);
         btn_demo_contact.setOnClickListener(this);

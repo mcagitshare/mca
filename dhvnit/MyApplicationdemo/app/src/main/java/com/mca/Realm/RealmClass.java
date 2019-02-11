@@ -36,9 +36,7 @@ public class RealmClass {
         try {
             realm = Realm.getDefaultInstance();
             list = realm.where(Item.class)
-                    .contains(name, search,Case.INSENSITIVE)
-//                    .or()
-//                    .contains(phone, search)
+                    .contains(name, search, Case.INSENSITIVE)
                     .findAll();
         } catch (Exception ex) {
             Log.e("TAG", ex.getLocalizedMessage());
@@ -61,6 +59,9 @@ public class RealmClass {
         } catch (Exception ex) {
             Log.e("TAG", ex.getLocalizedMessage());
         } finally {
+            if (realm != null) {
+                realm.close();
+            }
         }
         return reqResps;
     }

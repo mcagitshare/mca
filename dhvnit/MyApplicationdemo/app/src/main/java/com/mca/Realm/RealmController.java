@@ -24,10 +24,6 @@ public class RealmController {
         return instance;
     }
 
-    public static RealmController getInstance() {
-        return instance;
-    }
-
     public Realm getRealm() {
         realm.where(Item.class).findAllSorted("name");
         return realm;
