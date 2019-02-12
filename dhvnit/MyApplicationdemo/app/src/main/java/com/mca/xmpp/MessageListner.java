@@ -26,7 +26,7 @@ public class MessageListner implements StanzaListener, StanzaFilter {
             throws NotConnectedException, InterruptedException, NotLoggedInException {
         Utils.printLog("stanza received: ", "message stanza" + stazna.toXML(null));
 
-/*        Message message = (Message) stazna;
+        Message message = (Message) stazna;
         Utils.printLog("message stanza", message.toXML(null).toString());
 
         if (message.getType().equals("normal/event/c")) {
@@ -54,6 +54,6 @@ public class MessageListner implements StanzaListener, StanzaFilter {
             // delete the contact to Contact List
         } else {
             Utils.printLog("Message : ", "didn't get");
-        }*/
+        }
     }
 }

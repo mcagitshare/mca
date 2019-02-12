@@ -149,17 +149,19 @@ public class SignInActivity extends AppCompatActivity {
             int port = Integer.parseInt(Utils.getRequestPayloadData(SignInActivity.this, Utils.messageserverport));
             String crc = Utils.getRequestPayloadData(SignInActivity.this, Utils.crc);
 
-            XMPPConnection connection = GetXmppConnection.getConnection(domain, port);
-            try {
-                ((XMPPTCPConnection) connection).login(regid, crc);
-                Utils.printLog("user name and pasword", regid + "\n" + crc);
-                Utils.printLog("XMPP connection", connection.isAuthenticated() + "");
-            } catch (XMPPException
-                    | SmackException
-                    | IOException
-                    | InterruptedException e) {
-                e.printStackTrace();
-            }
+            XMPPConnection connection = GetXmppConnection.getConnection(domain, port, regid, crc);
+            Utils.printLog("XMPP connection", connection.isAuthenticated() + "");
+
+//            try {
+//                ((XMPPTCPConnection) connection).login(regid, crc);
+//                Utils.printLog("user name and pasword", regid + "\n" + crc);
+//                Utils.printLog("XMPP connection", connection.isAuthenticated() + "");
+//            } catch (XMPPException
+//                    | SmackException
+//                    | IOException
+//                    | InterruptedException e) {
+//                e.printStackTrace();
+//            }
             return null;
         }
     }

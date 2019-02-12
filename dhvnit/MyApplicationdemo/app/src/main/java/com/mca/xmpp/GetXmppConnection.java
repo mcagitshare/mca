@@ -14,7 +14,26 @@ import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 public class GetXmppConnection {
 
 
-    public static XMPPTCPConnection getConnection(String domain, int port) {
+    public static XMPPTCPConnection setConnection(String regid, String crc) {
+        XMPPTCPConnection connection = null;
+
+        try {
+            connection.login(regid, crc);
+
+        } catch (XMPPException e) {
+            e.printStackTrace();
+        } catch (SmackException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return connection;
+    }
+
+    public static XMPPTCPConnection getConnection(String domain, int port, String regid, String crc) {
 
         XMPPTCPConnection connection = null;
 
@@ -41,6 +60,7 @@ public class GetXmppConnection {
             connection.setReplyTimeout(connectTimeout);
             connection.addConnectionListener(new ConncetionListner());
             connection.connect();
+            connection.login(regid, crc);
             connection.addAsyncStanzaListener(new MessageListner(), new MessageListner());
         } catch (InterruptedException
                 | XMPPException

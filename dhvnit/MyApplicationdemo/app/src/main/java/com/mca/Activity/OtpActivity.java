@@ -221,22 +221,27 @@ public class OtpActivity extends AppCompatActivity {
             XMPPConnection connection = GetXmppConnection.getConnection
                     (
                             Utils.getRequestPayloadData(OtpActivity.this, Utils.messageserver),
-                            Integer.parseInt(Utils.getRequestPayloadData(OtpActivity.this, Utils.messageserverport))
+                            Integer.parseInt(Utils.getRequestPayloadData(OtpActivity.this, Utils.messageserverport)),
+                            Utils.getRequestPayloadData(OtpActivity.this, Utils.regid),
+                            Utils.getRequestPayloadData(OtpActivity.this, Utils.crc)
                     );
-            try {
-                ((XMPPTCPConnection) connection).login
-                        (
-                                Utils.getRequestPayloadData(OtpActivity.this, Utils.regid),
-                                Utils.getRequestPayloadData(OtpActivity.this, Utils.crc)
-                        );
-                Utils.printLog("XMPP connection", connection.isConnected() + "");
+            Utils.printLog("XMPP connection", connection.isConnected() + "");
 
-            } catch (XMPPException
-                    | SmackException
-                    | IOException
-                    | InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//
+//                ((XMPPTCPConnection) connection).login
+//                        (
+//                                Utils.getRequestPayloadData(OtpActivity.this, Utils.regid),
+//                                Utils.getRequestPayloadData(OtpActivity.this, Utils.crc)
+//                        );
+//                Utils.printLog("XMPP connection", connection.isConnected() + "");
+//
+//            } catch (XMPPException
+//                    | SmackException
+//                    | IOException
+//                    | InterruptedException e) {
+//                e.printStackTrace();
+//            }
             return null;
         }
     }
