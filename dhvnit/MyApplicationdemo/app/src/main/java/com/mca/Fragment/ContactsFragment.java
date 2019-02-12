@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.birbit.android.jobqueue.JobManager;
 import com.mca.Activity.ContactListActivity;
 import com.mca.Activity.MessagesEventsContactsActivity;
+import com.mca.Adapter.ContactRecyclerAdapter;
+import com.mca.Adapter.EventRecyclerAdapter;
 import com.mca.Adapter.RecAdapter;
 import com.mca.Adapter.RecyclerAdapter;
 import com.mca.Adapter.SimpleDividerItemDecoration;
@@ -34,11 +36,12 @@ public class ContactsFragment extends Fragment {
 
     RealmController realmController;
     RecyclerView recyclerView;
-    RecAdapter adapter;
+    ContactRecyclerAdapter adapter;
     JobManager jobManager;
 
     TextView noContacts;
     FragmentActivity activity;
+
     public ContactsFragment() {
     }
 
@@ -59,32 +62,18 @@ public class ContactsFragment extends Fragment {
         activity = getActivity();
 
         recyclerView = view.findViewById(R.id.rv_contacts);
-        noContacts = view.findViewById(R.id.no_contacts);
-
-        initView();
-
-        return view;
-    }
-
-    public void deleteItem(final String itemId) {
-        realmController.deleteItem(itemId);
-    }
-
-    public void editItem(final String itemId, final String name, String number) {
-        realmController.editItem(itemId, name, number);
-    }
-
-    private void initView() {
         jobManager = DemoApplication.getInstance().getJobManager();
+        noContacts = view.findViewById(R.id.no_contacts);
         realmController = RealmController.with(getActivity());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
-        adapter = new RecAdapter(this, realmController.getItems());
+
+        adapter = new ContactRecyclerAdapter(this, realmController.getContacts());
         realmController.getRealm().addChangeListener(new RealmChangeListener<Realm>() {
             @Override
             public void onChange(Realm element) {
-                if (realmController.getItems() != null && realmController.getItems().size() > 0) {
+                if (realmController.getContacts() != null && realmController.getContacts().size() > 0) {
                     noContacts.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
                 } else {
@@ -94,6 +83,8 @@ public class ContactsFragment extends Fragment {
         });
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         recyclerView.setAdapter(adapter);
+
+        return view;
     }
 
     @Override

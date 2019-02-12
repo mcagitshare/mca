@@ -128,7 +128,7 @@ public class DemoApplication extends Application {
 
         Realm.init(this);
 
-        setupUncaughtException();
+//        setupUncaughtException();
 
         final RealmConfiguration realmConfig = new RealmConfiguration.Builder()
                 .name("myContactdemo.realm")

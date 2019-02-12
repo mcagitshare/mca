@@ -10,12 +10,12 @@
     tools:showIn="@layout/activity_main">
 
     <android.support.v7.widget.RecyclerView
-        android:visibility="gone"
         android:id="@+id/rv_events"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"/>
     <TextView
+        android:visibility="gone"
         android:id="@+id/no_contacts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

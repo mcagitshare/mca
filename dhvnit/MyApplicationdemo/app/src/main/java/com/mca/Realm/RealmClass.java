@@ -2,21 +2,52 @@ package com.mca.Realm;
 
 import android.util.Log;
 
+import com.mca.Model.Contact;
+import com.mca.Model.Event;
 import com.mca.Model.Item;
+import com.mca.Model.Message;
 import com.mca.Model.ReqResp;
 
 import io.realm.Case;
 import io.realm.Realm;
+import io.realm.RealmModel;
 import io.realm.RealmResults;
 
 public class RealmClass {
     private static String name = "name";
 
-    public static void Insertdata(Realm realm, final Item item) {
+    public static void InsertItem(Realm realm, final Item item) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.insertOrUpdate(item);
+            }
+        });
+    }
+
+    public static void InsertEvent(Realm realm, final Event event) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(event);
+            }
+        });
+    }
+
+    public static void InsertMessage(Realm realm, final Message message) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(message);
+            }
+        });
+    }
+
+    public static void InsertContact(Realm realm, final Contact contact) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(contact);
             }
         });
     }

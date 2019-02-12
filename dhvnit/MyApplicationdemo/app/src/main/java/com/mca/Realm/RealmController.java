@@ -3,7 +3,10 @@ package com.mca.Realm;
 import android.app.Activity;
 import android.app.Application;
 
+import com.mca.Model.Contact;
+import com.mca.Model.Event;
 import com.mca.Model.Item;
+import com.mca.Model.Message;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -35,6 +38,18 @@ public class RealmController {
 
     public RealmResults<Item> getItems() {
         return realm.where(Item.class).findAllSorted("name");
+    }
+
+    public RealmResults<Event> getEvents() {
+        return realm.where(Event.class).findAllSorted("DateFrom");
+    }
+
+    public RealmResults<Message> getMessages() {
+        return realm.where(Message.class).findAllSorted("DisplayMessage");
+    }
+
+    public RealmResults<Contact> getContacts() {
+        return realm.where(Contact.class).findAllSorted("Name");
     }
 
     public long getItemsCount() {

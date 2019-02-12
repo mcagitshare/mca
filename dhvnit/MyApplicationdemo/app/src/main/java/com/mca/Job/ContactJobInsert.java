@@ -85,7 +85,7 @@ public class ContactJobInsert extends Job {
                         String phone = job.getString("phone").trim();
 
                         Item item = new Item(id, name, phone, image);
-                        RealmClass.Insertdata(realm, item);
+                        RealmClass.InsertItem(realm, item);
                     } catch (Exception ex) {
                         Log.e("Exception", response);
                         ex.printStackTrace();

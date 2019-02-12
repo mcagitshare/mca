@@ -10,12 +10,15 @@ import android.view.MenuItem;
 
 import com.mca.Adapter.ViewPagerAdapter;
 import com.mca.R;
+import com.mca.Realm.RealmController;
 
 public class MessagesEventsContactsActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
+
+    RealmController realmController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class MessagesEventsContactsActivity extends AppCompatActivity {
 
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        realmController = RealmController.with(this);
     }
 
     @Override
