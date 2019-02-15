@@ -13,15 +13,25 @@ public class Message extends RealmObject {
     private String DisplayMessage;
     private String Icon;
     private String Option;
+    private Boolean ReadStatus;
 
     public Message() {
     }
 
-    public Message(String id, String displayMessage, String icon, String option) {
+    public Message(String id, String displayMessage, String icon, String option, Boolean readStatus) {
         Id = id;
         DisplayMessage = displayMessage;
         Icon = icon;
         Option = option;
+        ReadStatus = readStatus;
+    }
+
+    public Boolean getReadStatus() {
+        return ReadStatus;
+    }
+
+    public void setReadStatus(Boolean readStatus) {
+        ReadStatus = readStatus;
     }
 
     public String getId() {

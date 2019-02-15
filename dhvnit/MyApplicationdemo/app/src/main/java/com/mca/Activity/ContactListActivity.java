@@ -117,7 +117,7 @@ public class ContactListActivity extends AppCompatActivity {
                     adapter = new RecyclerAdapter(ContactListActivity.this, realmController.getItems());
                     recyclerView.setAdapter(adapter);
                 } else {
-                    adapter = new RecyclerAdapter(ContactListActivity.this, RealmClass.searchData(query));
+                    adapter = new RecyclerAdapter(ContactListActivity.this, RealmClass.searchItemData(query));
                     recyclerView.setAdapter(adapter);
                 }
                 return true;

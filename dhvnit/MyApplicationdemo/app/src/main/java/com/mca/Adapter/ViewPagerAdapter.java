@@ -3,12 +3,12 @@ package com.mca.Adapter;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.mca.Fragment.ContactsFragment;
+import com.mca.Fragment.GroupsFragment;
 import com.mca.Fragment.EventsFragment;
 import com.mca.Fragment.MessagesFragment;
+import com.mca.Fragment.OnlyMessageFragment;
 import com.mca.R;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -32,7 +32,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 return new EventsFragment();
             case 2:
-                return new ContactsFragment();
+                return new GroupsFragment();
             default:
                 return new MessagesFragment();
         }
@@ -51,7 +51,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 return context.getString(R.string.events);
             case 2:
-                return context.getString(R.string.contacts);
+                return context.getString(R.string.group);
             default:
                 return null;
         }

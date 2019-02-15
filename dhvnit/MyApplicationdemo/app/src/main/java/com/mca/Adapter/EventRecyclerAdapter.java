@@ -1,6 +1,5 @@
 package com.mca.Adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mca.Activity.ContactDetials;
-import com.mca.Fragment.ContactsFragment;
 import com.mca.Fragment.EventsFragment;
 import com.mca.Model.Event;
 import com.mca.R;
@@ -44,7 +42,7 @@ public class EventRecyclerAdapter extends RealmRecyclerViewAdapter<Event, EventR
     }
 
     @Override
-    public void onBindViewHolder(EventRecyclerAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final EventRecyclerAdapter.MyViewHolder holder, int position) {
         final Event obj = getData().get(position);
 
         holder.item_name.setText(obj.getEventName());
@@ -97,12 +95,21 @@ public class EventRecyclerAdapter extends RealmRecyclerViewAdapter<Event, EventR
             }
         });*/
 
+        Boolean read = obj.getReadStatus();
+        if (!read) {
+            holder.edit.setImageResource(R.mipmap.new_message);
+        } else
+            holder.edit.setVisibility(View.GONE);
+
         holder.ll_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mActivity.editEvent(obj.getId(), true);
+
                 Intent intent = new Intent(mActivity.getActivity(), ContactDetials.class);
+                intent.putExtra("Name", "Event Name");
                 intent.putExtra("name", obj.getEventName());
-                intent.putExtra("phone", obj.getDateFrom());
+//                intent.putExtra("phone", obj.getDateFrom());
                 intent.putExtra("image", obj.getIcon());
                 intent.putExtra("id", obj.getId());
                 mActivity.startActivity(intent);
@@ -123,6 +130,7 @@ public class EventRecyclerAdapter extends RealmRecyclerViewAdapter<Event, EventR
             item_number = view.findViewById(R.id.item_number);
             edit = view.findViewById(R.id.iv_edit);
             ll_header = view.findViewById(R.id.ll_header);
+
         }
     }
 }

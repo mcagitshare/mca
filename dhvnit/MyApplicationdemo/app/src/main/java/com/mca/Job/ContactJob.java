@@ -18,12 +18,14 @@ public class ContactJob extends Job {
 
     String id = UUID.randomUUID() + "";
     String GroupId, ContactId, Name, Image, Phone;
+    Boolean ReadStatus;
 
-    public ContactJob(String groupId, String contactId, String name, String image, String phone) {
+    public ContactJob(String groupId, String contactId, String name, String image, String phone, Boolean readStatus) {
         super(new Params(1).requireNetwork());
         GroupId = groupId;
         ContactId = contactId;
         Name = name;
+        ReadStatus = readStatus;
         Image = image;
         Phone = phone;
     }
@@ -34,7 +36,7 @@ public class ContactJob extends Job {
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
-            Contact contact = new Contact(id, GroupId, ContactId, Name, Image, Phone);
+            Contact contact = new Contact(id, GroupId, ContactId, Name, Image, Phone, ReadStatus);
             RealmClass.InsertContact(realm, contact);
         } catch (Exception ex) {
             ex.printStackTrace();

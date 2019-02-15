@@ -1,6 +1,5 @@
 package com.mca.Adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,21 +12,20 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mca.Activity.ContactDetials;
-import com.mca.Fragment.ContactsFragment;
+import com.mca.Fragment.GroupsFragment;
 import com.mca.Model.Contact;
-import com.mca.Model.Event;
 import com.mca.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-public class ContactRecyclerAdapter extends RealmRecyclerViewAdapter<Contact, ContactRecyclerAdapter.MyViewHolder> {
+public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Contact, GroupRecyclerAdapter.MyViewHolder> {
 
-    ContactsFragment mActivity;
+    GroupsFragment mActivity;
 
-    public ContactRecyclerAdapter(ContactsFragment activity,
-                                  OrderedRealmCollection<Contact> data) {
+    public GroupRecyclerAdapter(GroupsFragment activity,
+                                OrderedRealmCollection<Contact> data) {
         super(data, true);
         this.mActivity = activity;
     }
@@ -37,14 +35,14 @@ public class ContactRecyclerAdapter extends RealmRecyclerViewAdapter<Contact, Co
     }
 
     @Override
-    public ContactRecyclerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_row, parent, false);
-        return new ContactRecyclerAdapter.MyViewHolder(itemView);
+        return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ContactRecyclerAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         final Contact obj = getData().get(position);
 
         holder.item_name.setText(obj.getName());
@@ -97,10 +95,21 @@ public class ContactRecyclerAdapter extends RealmRecyclerViewAdapter<Contact, Co
             }
         });*/
 
+        Boolean read = obj.getReadStatus();
+        if (!read) {
+            holder.edit.setImageResource(R.mipmap.new_message);
+        } else
+            holder.edit.setVisibility(View.GONE);
+
+
         holder.ll_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                mActivity.editContact(obj.getId(), true);
+
                 Intent intent = new Intent(mActivity.getActivity(), ContactDetials.class);
+                intent.putExtra("Name", "Contact Name");
                 intent.putExtra("name", obj.getName());
                 intent.putExtra("phone", obj.getPhone());
                 intent.putExtra("image", obj.getImage());

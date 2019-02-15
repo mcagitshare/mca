@@ -1,18 +1,11 @@
 package com.mca.Adapter;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,7 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mca.Activity.ContactDetials;
-import com.mca.Fragment.ContactsFragment;
+import com.mca.Fragment.GroupsFragment;
 import com.mca.Model.Item;
 import com.mca.R;
 
@@ -31,9 +24,9 @@ import io.realm.RealmResults;
 
 public class RecAdapter extends RealmRecyclerViewAdapter<Item, RecAdapter.MyViewHolder> {
 
-    ContactsFragment mActivity;
+    GroupsFragment mActivity;
 
-    public RecAdapter(ContactsFragment activity, RealmResults<Item> items) {
+    public RecAdapter(GroupsFragment activity, RealmResults<Item> items) {
         super(items, true);
         mActivity = activity;
     }

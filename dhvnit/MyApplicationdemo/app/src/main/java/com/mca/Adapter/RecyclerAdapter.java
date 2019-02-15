@@ -62,7 +62,7 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<Item, RecyclerAdap
         if (obj.getPhone() != null) {
             holder.item_number.setText(obj.getPhone() + "");
         }
-
+        
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

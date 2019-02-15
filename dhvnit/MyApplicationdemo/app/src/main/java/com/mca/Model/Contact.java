@@ -15,17 +15,27 @@ public class Contact extends RealmObject {
     private String Name;
     private String Image;
     private String Phone;
+    private Boolean ReadStatus;
 
     public Contact() {
     }
 
-    public Contact(String id, String groupId, String contactId, String name, String image, String phone) {
+    public Contact(String id, String groupId, String contactId, String name, String image, String phone, Boolean readStatus) {
         Id = id;
         GroupId = groupId;
         ContactId = contactId;
         Name = name;
         Image = image;
         Phone = phone;
+        ReadStatus = readStatus;
+    }
+
+    public Boolean getReadStatus() {
+        return ReadStatus;
+    }
+
+    public void setReadStatus(Boolean readStatus) {
+        ReadStatus = readStatus;
     }
 
     public String getId() {

@@ -55,6 +55,7 @@ public class MessageListner implements StanzaListener, StanzaFilter {
                     if (messageObj.getInt("type") == 101) {
 
                         //  add the event to Event List
+                        Boolean readStatus = false;
                         String eventName = messageObj.getString("eventname");
                         String icon = messageObj.getString("icon");
                         String dateFrom = messageObj.getString("datefrom");
@@ -69,7 +70,7 @@ public class MessageListner implements StanzaListener, StanzaFilter {
                             }
                         }
 
-                        jobManager.addJobInBackground(new EventsJob(eventName, icon, dateFrom, dateTo, option));
+                        jobManager.addJobInBackground(new EventsJob(eventName, icon, dateFrom, dateTo, option, readStatus));
                     }
 /*                    if (message.getType().equals("normal/event/u")) {
                         //  Update the event to Event List
@@ -82,6 +83,7 @@ public class MessageListner implements StanzaListener, StanzaFilter {
                     if (messageObj.getInt("type") == 100) {
 
                         // add the message to Message List
+                        Boolean readStatus = false;
                         String displayMessage = messageObj.getString("displaymessage");
                         String icon = messageObj.getString("icon");
 
@@ -93,7 +95,7 @@ public class MessageListner implements StanzaListener, StanzaFilter {
                                 option = jobOptions.getString("option");
                             }
                         }
-                        jobManager.addJobInBackground(new MessagesJob(displayMessage, icon, option));
+                        jobManager.addJobInBackground(new MessagesJob(displayMessage, icon, option, readStatus));
 
                     }
 /*                    if (message.getType().equals("normal/message/d")) {
@@ -101,13 +103,14 @@ public class MessageListner implements StanzaListener, StanzaFilter {
                     }*/
                     if (messageObj.getInt("type") == 103) {
                         // add the contact to Contact List
+                        Boolean readStatus = false;
                         String groupId = messageObj.getString("groupid");
                         String id = messageObj.getString("id");
                         String name = messageObj.getString("name");
                         String image = messageObj.getString("image");
                         String phone = messageObj.getString("phone");
 
-                        jobManager.addJobInBackground(new ContactJob(groupId, id, name, image, phone));
+                        jobManager.addJobInBackground(new ContactJob(groupId, id, name, image, phone, readStatus));
                     }
 /*                    if (message.getType().equals("normal/vcard/u")) {
                         // update the contact to Contact List
@@ -116,6 +119,9 @@ public class MessageListner implements StanzaListener, StanzaFilter {
                         // delete the contact to Contact List
                     }*/
                 } catch (JSONException e) {
+
+                    jobManager.addJobInBackground(new MessagesJob(messageBody, null, null, false));
+
                     e.printStackTrace();
                 }
             } else {

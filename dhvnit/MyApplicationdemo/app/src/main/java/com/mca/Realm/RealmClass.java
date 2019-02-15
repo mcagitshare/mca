@@ -61,12 +61,66 @@ public class RealmClass {
         });
     }
 
-    public static RealmResults<Item> searchData(String search) {
+    public static RealmResults<Item> searchItemData(String search) {
         RealmResults<Item> list = null;
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
             list = realm.where(Item.class)
+                    .contains(name, search, Case.INSENSITIVE)
+                    .findAll();
+        } catch (Exception ex) {
+            Log.e("TAG", ex.getLocalizedMessage());
+        } finally {
+            if (realm != null) {
+                realm.close();
+            }
+        }
+        return list;
+    }
+
+    public static RealmResults<Contact> searchContactData(String search) {
+        RealmResults<Contact> list = null;
+        Realm realm = null;
+        try {
+            realm = Realm.getDefaultInstance();
+            list = realm.where(Contact.class)
+                    .contains(name, search, Case.INSENSITIVE)
+                    .findAll();
+        } catch (Exception ex) {
+            Log.e("TAG", ex.getLocalizedMessage());
+        } finally {
+            if (realm != null) {
+                realm.close();
+            }
+        }
+        return list;
+    }
+
+    public static RealmResults<Message> searchMessagesData(String search) {
+        RealmResults<Message> list = null;
+        Realm realm = null;
+        try {
+            realm = Realm.getDefaultInstance();
+            list = realm.where(Message.class)
+                    .contains("DisplayMessage", search, Case.INSENSITIVE)
+                    .findAll();
+        } catch (Exception ex) {
+            Log.e("TAG", ex.getLocalizedMessage());
+        } finally {
+            if (realm != null) {
+                realm.close();
+            }
+        }
+        return list;
+    }
+
+    public static RealmResults<Event> searchEventData(String search) {
+        RealmResults<Event> list = null;
+        Realm realm = null;
+        try {
+            realm = Realm.getDefaultInstance();
+            list = realm.where(Event.class)
                     .contains(name, search, Case.INSENSITIVE)
                     .findAll();
         } catch (Exception ex) {

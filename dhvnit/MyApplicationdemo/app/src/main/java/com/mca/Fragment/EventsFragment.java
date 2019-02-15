@@ -21,6 +21,7 @@ import com.mca.Application.DemoApplication;
 import com.mca.R;
 import com.mca.Realm.RealmController;
 import com.mca.Utils.Constants;
+import com.mca.Utils.Utils;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -67,6 +68,15 @@ public class EventsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    public void deleteItem(String itemId) {
+        realmController.deleteItem(itemId);
+    }
+
+    public void editEvent(String id, Boolean readStatus) {
+        realmController.editEvent(id, readStatus);
+        Utils.hideKeyboard(getActivity());
     }
 
     @Override

@@ -18,6 +18,7 @@ public class ContactDetials extends AppCompatActivity {
 
     CircleImageView image;
     TextView name, phone, id;
+    TextView tv_name;
     Toolbar toolbar;
 
     @Override
@@ -36,11 +37,13 @@ public class ContactDetials extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
 
+        tv_name = findViewById(R.id.tv_name);
         image = findViewById(R.id.contact);
         name = findViewById(R.id.name);
         phone = findViewById(R.id.phone);
         id = findViewById(R.id.id);
 
+        tv_name.setText(intent.getStringExtra("Name"));
         name.setText(intent.getStringExtra("name"));
         phone.setText(intent.getStringExtra("phone"));
         id.setText(intent.getStringExtra("id"));

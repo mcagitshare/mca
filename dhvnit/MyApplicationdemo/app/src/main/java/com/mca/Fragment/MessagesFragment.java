@@ -1,23 +1,33 @@
 package com.mca.Fragment;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.birbit.android.jobqueue.JobManager;
+import com.mca.Activity.ContactListActivity;
 import com.mca.Adapter.EventRecyclerAdapter;
 import com.mca.Adapter.MessageRecyclerAdapter;
+import com.mca.Adapter.RecyclerAdapter;
 import com.mca.Adapter.SimpleDividerItemDecoration;
 import com.mca.Application.DemoApplication;
 import com.mca.R;
+import com.mca.Realm.RealmClass;
 import com.mca.Realm.RealmController;
+import com.mca.Utils.Utils;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -67,6 +77,26 @@ public class MessagesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    public void deleteItem(String itemId) {
+        realmController.deleteItem(itemId);
+    }
+
+    public void editMessage(String id, Boolean readStatus) {
+        realmController.editMessages(id, readStatus);
+        Utils.hideKeyboard(getActivity());
+    }
+
+    public void search(String query) {
+
+        if (query.isEmpty()) {
+            adapter = new MessageRecyclerAdapter(MessagesFragment.this, realmController.getMessages());
+            recyclerView.setAdapter(adapter);
+        } else {
+            adapter = new MessageRecyclerAdapter(MessagesFragment.this, RealmClass.searchMessagesData(query));
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     @Override

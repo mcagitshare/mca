@@ -1,7 +1,6 @@
 package com.mca.Fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,34 +14,28 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.birbit.android.jobqueue.JobManager;
-import com.mca.Activity.ContactListActivity;
-import com.mca.Activity.MessagesEventsContactsActivity;
-import com.mca.Adapter.ContactRecyclerAdapter;
-import com.mca.Adapter.EventRecyclerAdapter;
-import com.mca.Adapter.RecAdapter;
-import com.mca.Adapter.RecyclerAdapter;
+import com.mca.Adapter.GroupRecyclerAdapter;
 import com.mca.Adapter.SimpleDividerItemDecoration;
 import com.mca.Application.DemoApplication;
 import com.mca.R;
 import com.mca.Realm.RealmController;
-import com.mca.Utils.Constants;
 import com.mca.Utils.Utils;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 
 @SuppressLint("ValidFragment")
-public class ContactsFragment extends Fragment {
+public class GroupsFragment extends Fragment {
 
     RealmController realmController;
     RecyclerView recyclerView;
-    ContactRecyclerAdapter adapter;
+    GroupRecyclerAdapter adapter;
     JobManager jobManager;
 
     TextView noContacts;
     FragmentActivity activity;
 
-    public ContactsFragment() {
+    public GroupsFragment() {
     }
 
     @Override
@@ -69,7 +62,7 @@ public class ContactsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
-        adapter = new ContactRecyclerAdapter(this, realmController.getContacts());
+        adapter = new GroupRecyclerAdapter(this, realmController.getContacts());
         realmController.getRealm().addChangeListener(new RealmChangeListener<Realm>() {
             @Override
             public void onChange(Realm element) {
@@ -85,6 +78,15 @@ public class ContactsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    public void deleteItem(String itemId) {
+        realmController.deleteItem(itemId);
+    }
+
+    public void editContact(String id, Boolean readStatus) {
+        realmController.editGroup(id, readStatus);
+        Utils.hideKeyboard(getActivity());
     }
 
     @Override

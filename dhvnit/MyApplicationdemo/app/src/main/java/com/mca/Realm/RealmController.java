@@ -44,12 +44,45 @@ public class RealmController {
         return realm.where(Event.class).findAllSorted("DateFrom");
     }
 
+    public void editEvent(final String eventId, final Boolean readStatus) {
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Event contact = realm.where(Event.class).equalTo("Id", eventId).findFirst();
+                contact.setReadStatus(readStatus);
+            }
+        });
+    }
+
     public RealmResults<Message> getMessages() {
         return realm.where(Message.class).findAllSorted("DisplayMessage");
     }
 
+    public void editMessages(final String messageId, final Boolean readStatus) {
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Message contact = realm.where(Message.class).equalTo("Id", messageId).findFirst();
+                contact.setReadStatus(readStatus);
+            }
+        });
+    }
+
     public RealmResults<Contact> getContacts() {
         return realm.where(Contact.class).findAllSorted("Name");
+    }
+
+    public void editGroup(final String contactId, final Boolean readStatus) {
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Contact contact = realm.where(Contact.class).equalTo("Id", contactId).findFirst();
+                contact.setReadStatus(readStatus);
+            }
+        });
     }
 
     public long getItemsCount() {

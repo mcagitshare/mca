@@ -2,6 +2,7 @@ package com.mca.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ public class MessageRecyclerAdapter extends RealmRecyclerViewAdapter<Message, Me
     }
 
     @Override
-    public void onBindViewHolder(MessageRecyclerAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MessageRecyclerAdapter.MyViewHolder holder, int position) {
         final Message obj = getData().get(position);
 
         holder.item_name.setText(obj.getDisplayMessage());
@@ -98,10 +99,20 @@ public class MessageRecyclerAdapter extends RealmRecyclerViewAdapter<Message, Me
             }
         });*/
 
+        Boolean read = obj.getReadStatus();
+        if (!read) {
+            holder.edit.setImageResource(R.mipmap.new_message);
+        } else
+            holder.edit.setVisibility(View.GONE);
+
         holder.ll_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                mActivity.editMessage(obj.getId(), true);
+
                 Intent intent = new Intent(mActivity.getActivity(), ContactDetials.class);
+                intent.putExtra("Name", "Message");
                 intent.putExtra("name", obj.getDisplayMessage());
                 intent.putExtra("option", obj.getOption());
                 intent.putExtra("image", obj.getIcon());
@@ -124,6 +135,7 @@ public class MessageRecyclerAdapter extends RealmRecyclerViewAdapter<Message, Me
             item_number = view.findViewById(R.id.item_number);
             edit = view.findViewById(R.id.iv_edit);
             ll_header = view.findViewById(R.id.ll_header);
+
         }
     }
 }

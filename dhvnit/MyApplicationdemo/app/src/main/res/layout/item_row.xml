@@ -56,7 +56,6 @@
             android:padding="5dp"
             android:layout_margin="8dp"
             android:src="@mipmap/edit"
-            android:tint="@android:color/darker_gray"
             android:layout_gravity="center"/>
     </LinearLayout>
 </LinearLayout>
