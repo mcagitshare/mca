@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <LinearLayout
         android:id="@+id/ll_header"
@@ -10,52 +11,77 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/iv_item"
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:padding="7dp"
-            app:civ_border_width="0.2dp"
-            app:civ_border_color="#0e0e0e"/>
+            app:civ_border_color="#0e0e0e"
+            app:civ_border_width="0.2dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="65dp"
-            android:layout_weight="0.7"
-            android:orientation="vertical"
             android:layout_marginLeft="16dp"
+            android:layout_weight="0.7"
             android:gravity="center"
+            android:orientation="vertical"
             android:padding="7dp">
-        <TextView
-            android:id="@+id/item_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:singleLine="true"
-            android:gravity="center_vertical"
-            android:text="assddffd"
-            android:textSize="18sp"
-            android:textColor="#000000" />
 
-        <TextView
-            android:id="@+id/item_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:text="94584"
-            android:textSize="14sp"
-            android:textColor="#777777" />
+            <TextView
+                android:id="@+id/item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="assddffd"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/item_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="94584"
+                android:textColor="#777777"
+                android:textSize="14sp" />
         </LinearLayout>
+
         <ImageView
             android:id="@+id/iv_edit"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:padding="5dp"
+            android:layout_gravity="center"
             android:layout_margin="8dp"
-            android:src="@mipmap/edit"
-            android:layout_gravity="center"/>
+            android:padding="5dp"
+            android:src="@mipmap/edit" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_acc_rej"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_accept"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="45dp"
+            android:padding="2dp"
+            android:src="@mipmap/accept"
+            android:tint="@android:color/holo_green_dark" />
+
+        <ImageView
+            android:id="@+id/iv_reject"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="2dp"
+            android:src="@mipmap/reject"
+            android:tint="@android:color/holo_red_light" />
     </LinearLayout>
 </LinearLayout>

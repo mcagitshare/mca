@@ -3,7 +3,7 @@ package com.mca.Realm;
 import android.app.Activity;
 import android.app.Application;
 
-import com.mca.Model.Contact;
+import com.mca.Model.Group;
 import com.mca.Model.Event;
 import com.mca.Model.Item;
 import com.mca.Model.Message;
@@ -44,13 +44,14 @@ public class RealmController {
         return realm.where(Event.class).findAllSorted("DateFrom");
     }
 
-    public void editEvent(final String eventId, final Boolean readStatus) {
+    public void editEvent(final String eventId, final Boolean readStatus, final Boolean accRej) {
 
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 Event contact = realm.where(Event.class).equalTo("Id", eventId).findFirst();
                 contact.setReadStatus(readStatus);
+                contact.setAccRej(accRej);
             }
         });
     }
@@ -59,28 +60,30 @@ public class RealmController {
         return realm.where(Message.class).findAllSorted("DisplayMessage");
     }
 
-    public void editMessages(final String messageId, final Boolean readStatus) {
+    public void editMessages(final String messageId, final Boolean readStatus, final Boolean accRej) {
 
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 Message contact = realm.where(Message.class).equalTo("Id", messageId).findFirst();
                 contact.setReadStatus(readStatus);
+                contact.setAccRej(accRej);
             }
         });
     }
 
-    public RealmResults<Contact> getContacts() {
-        return realm.where(Contact.class).findAllSorted("Name");
+    public RealmResults<Group> getContacts() {
+        return realm.where(Group.class).findAllSorted("Name");
     }
 
-    public void editGroup(final String contactId, final Boolean readStatus) {
+    public void editGroup(final String contactId, final Boolean readStatus, final boolean accRej) {
 
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Contact contact = realm.where(Contact.class).equalTo("Id", contactId).findFirst();
-                contact.setReadStatus(readStatus);
+                Group group = realm.where(Group.class).equalTo("Id", contactId).findFirst();
+                group.setReadStatus(readStatus);
+                group.setAccRej(accRej);
             }
         });
     }
@@ -107,6 +110,39 @@ public class RealmController {
             @Override
             public void execute(Realm realm) {
                 realm.where(Item.class).equalTo("id", itemId).findFirst()
+                        .deleteFromRealm();
+            }
+        });
+    }
+
+    public void deleteEventData(final String itemId) {
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(Event.class).equalTo("Id", itemId).findFirst()
+                        .deleteFromRealm();
+            }
+        });
+    }
+
+    public void deleteMessageData(final String itemId) {
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(Message.class).equalTo("Id", itemId).findFirst()
+                        .deleteFromRealm();
+            }
+        });
+    }
+
+    public void deleteGroupData(final String itemId) {
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(Group.class).equalTo("Id", itemId).findFirst()
                         .deleteFromRealm();
             }
         });

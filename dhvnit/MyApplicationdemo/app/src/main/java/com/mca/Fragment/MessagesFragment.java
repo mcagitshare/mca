@@ -1,27 +1,18 @@
 package com.mca.Fragment;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.birbit.android.jobqueue.JobManager;
-import com.mca.Activity.ContactListActivity;
-import com.mca.Adapter.EventRecyclerAdapter;
 import com.mca.Adapter.MessageRecyclerAdapter;
-import com.mca.Adapter.RecyclerAdapter;
 import com.mca.Adapter.SimpleDividerItemDecoration;
 import com.mca.Application.DemoApplication;
 import com.mca.R;
@@ -79,12 +70,12 @@ public class MessagesFragment extends Fragment {
         return view;
     }
 
-    public void deleteItem(String itemId) {
-        realmController.deleteItem(itemId);
+    public void deleteMessageData(String itemId) {
+        realmController.deleteMessageData(itemId);
     }
 
-    public void editMessage(String id, Boolean readStatus) {
-        realmController.editMessages(id, readStatus);
+    public void editMessage(String id, Boolean readStatus, Boolean accRej) {
+        realmController.editMessages(id, readStatus, accRej);
         Utils.hideKeyboard(getActivity());
     }
 

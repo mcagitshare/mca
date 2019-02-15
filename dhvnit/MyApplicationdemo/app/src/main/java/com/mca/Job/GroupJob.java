@@ -6,25 +6,26 @@ import android.support.annotation.Nullable;
 import com.birbit.android.jobqueue.Job;
 import com.birbit.android.jobqueue.Params;
 import com.birbit.android.jobqueue.RetryConstraint;
-import com.mca.Model.Contact;
-import com.mca.Model.Event;
+import com.mca.Model.Group;
 import com.mca.Realm.RealmClass;
 
 import java.util.UUID;
 
 import io.realm.Realm;
 
-public class ContactJob extends Job {
+public class GroupJob extends Job {
 
     String id = UUID.randomUUID() + "";
     String GroupId, ContactId, Name, Image, Phone;
     Boolean ReadStatus;
+    Boolean AccRej;
 
-    public ContactJob(String groupId, String contactId, String name, String image, String phone, Boolean readStatus) {
+    public GroupJob(String groupId, String contactId, String name, String image, String phone, Boolean readStatus, Boolean accRej) {
         super(new Params(1).requireNetwork());
         GroupId = groupId;
         ContactId = contactId;
         Name = name;
+        AccRej = accRej;
         ReadStatus = readStatus;
         Image = image;
         Phone = phone;
@@ -36,8 +37,8 @@ public class ContactJob extends Job {
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
-            Contact contact = new Contact(id, GroupId, ContactId, Name, Image, Phone, ReadStatus);
-            RealmClass.InsertContact(realm, contact);
+            Group group = new Group(id, GroupId, ContactId, Name, Image, Phone, ReadStatus, AccRej);
+            RealmClass.InsertContact(realm, group);
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {

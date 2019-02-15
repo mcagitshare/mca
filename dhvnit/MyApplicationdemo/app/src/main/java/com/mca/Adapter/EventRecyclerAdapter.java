@@ -86,7 +86,7 @@ public class EventRecyclerAdapter extends RealmRecyclerViewAdapter<Event, EventR
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        activity.deleteItem(obj.getId());
+                        activity.deleteGroupData(obj.getId());
                     }
                 });
 
@@ -104,7 +104,7 @@ public class EventRecyclerAdapter extends RealmRecyclerViewAdapter<Event, EventR
         holder.ll_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mActivity.editEvent(obj.getId(), true);
+                mActivity.editEvent(obj.getId(), true, obj.getAccRej());
 
                 Intent intent = new Intent(mActivity.getActivity(), ContactDetials.class);
                 intent.putExtra("Name", "Event Name");
@@ -115,13 +115,33 @@ public class EventRecyclerAdapter extends RealmRecyclerViewAdapter<Event, EventR
                 mActivity.startActivity(intent);
             }
         });
+
+        Boolean accRej = obj.getAccRej();
+        if (!accRej) {
+            holder.accept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.editEvent(obj.getId(), obj.getReadStatus(), true);
+                    holder.ll_acc_rej.setVisibility(View.GONE);
+                }
+            });
+
+            holder.reject.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.deleteEventData(obj.getId());
+                    holder.ll_acc_rej.setVisibility(View.GONE);
+                }
+            });
+        } else
+            holder.ll_acc_rej.setVisibility(View.GONE);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView item_name, item_number;
-        private ImageView edit;
+        private ImageView edit, accept, reject;
         private CircleImageView image;
-        private LinearLayout ll_header;
+        private LinearLayout ll_header, ll_acc_rej;
 
         public MyViewHolder(View view) {
             super(view);
@@ -129,7 +149,12 @@ public class EventRecyclerAdapter extends RealmRecyclerViewAdapter<Event, EventR
             item_name = view.findViewById(R.id.item_name);
             item_number = view.findViewById(R.id.item_number);
             edit = view.findViewById(R.id.iv_edit);
+
+            ll_acc_rej = view.findViewById(R.id.ll_acc_rej);
             ll_header = view.findViewById(R.id.ll_header);
+
+            accept = view.findViewById(R.id.iv_accept);
+            reject = view.findViewById(R.id.iv_reject);
 
         }
     }

@@ -62,7 +62,7 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<Item, RecyclerAdap
         if (obj.getPhone() != null) {
             holder.item_number.setText(obj.getPhone() + "");
         }
-        
+
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,16 +111,19 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<Item, RecyclerAdap
                 activity.startActivity(intent);
             }
         });
+
+        holder.ll_acc_rej.setVisibility(View.GONE);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView item_name, item_number;
         private ImageView edit;
         private CircleImageView image;
-        private LinearLayout ll_header;
+        private LinearLayout ll_header, ll_acc_rej;
 
         public MyViewHolder(View view) {
             super(view);
+            ll_acc_rej = view.findViewById(R.id.ll_acc_rej);
             image = view.findViewById(R.id.iv_item);
             item_name = view.findViewById(R.id.item_name);
             item_number = view.findViewById(R.id.item_number);

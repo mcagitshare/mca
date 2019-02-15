@@ -13,19 +13,19 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mca.Activity.ContactDetials;
 import com.mca.Fragment.GroupsFragment;
-import com.mca.Model.Contact;
+import com.mca.Model.Group;
 import com.mca.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Contact, GroupRecyclerAdapter.MyViewHolder> {
+public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Group, GroupRecyclerAdapter.MyViewHolder> {
 
     GroupsFragment mActivity;
 
     public GroupRecyclerAdapter(GroupsFragment activity,
-                                OrderedRealmCollection<Contact> data) {
+                                OrderedRealmCollection<Group> data) {
         super(data, true);
         this.mActivity = activity;
     }
@@ -43,7 +43,7 @@ public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Contact, Grou
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        final Contact obj = getData().get(position);
+        final Group obj = getData().get(position);
 
         holder.item_name.setText(obj.getName());
 
@@ -86,7 +86,7 @@ public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Contact, Grou
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        activity.deleteItem(obj.getId());
+                        activity.deleteGroupData(obj.getId());
                     }
                 });
 
@@ -106,10 +106,10 @@ public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Contact, Grou
             @Override
             public void onClick(View v) {
 
-                mActivity.editContact(obj.getId(), true);
+                mActivity.editGroup(obj.getId(), true, obj.getAccRej());
 
                 Intent intent = new Intent(mActivity.getActivity(), ContactDetials.class);
-                intent.putExtra("Name", "Contact Name");
+                intent.putExtra("Name", "Group Name");
                 intent.putExtra("name", obj.getName());
                 intent.putExtra("phone", obj.getPhone());
                 intent.putExtra("image", obj.getImage());
@@ -117,13 +117,33 @@ public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Contact, Grou
                 mActivity.startActivity(intent);
             }
         });
+
+        Boolean accRej = obj.getAccRej();
+        if (!accRej) {
+            holder.accept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.editGroup(obj.getId(), obj.getReadStatus(), true);
+                    holder.ll_acc_rej.setVisibility(View.GONE);
+                }
+            });
+
+            holder.reject.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.deleteGroupData(obj.getId());
+                    holder.ll_acc_rej.setVisibility(View.GONE);
+                }
+            });
+        } else
+            holder.ll_acc_rej.setVisibility(View.GONE);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView item_name, item_number;
-        private ImageView edit;
+        private ImageView edit, accept, reject;
         private CircleImageView image;
-        private LinearLayout ll_header;
+        private LinearLayout ll_header, ll_acc_rej;
 
         public MyViewHolder(View view) {
             super(view);
@@ -131,7 +151,12 @@ public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Contact, Grou
             item_name = view.findViewById(R.id.item_name);
             item_number = view.findViewById(R.id.item_number);
             edit = view.findViewById(R.id.iv_edit);
+
+            ll_acc_rej = view.findViewById(R.id.ll_acc_rej);
             ll_header = view.findViewById(R.id.ll_header);
+
+            accept = view.findViewById(R.id.iv_accept);
+            reject = view.findViewById(R.id.iv_reject);
         }
     }
 }

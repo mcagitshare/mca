@@ -16,8 +16,9 @@ public class Event extends RealmObject {
     private String DateTo;
     private String Option;
     private Boolean ReadStatus;
+    private Boolean AccRej;
 
-    public Event(String id, String eventName, String icon, String dateFrom, String dateTo, String option, Boolean readStatus) {
+    public Event(String id, String eventName, String icon, String dateFrom, String dateTo, String option, Boolean readStatus, Boolean accRej) {
         Id = id;
         EventName = eventName;
         Icon = icon;
@@ -25,9 +26,18 @@ public class Event extends RealmObject {
         DateTo = dateTo;
         Option = option;
         ReadStatus = readStatus;
+        AccRej = accRej;
     }
 
     public Event() {
+    }
+
+    public Boolean getAccRej() {
+        return AccRej;
+    }
+
+    public void setAccRej(Boolean accRej) {
+        AccRej = accRej;
     }
 
     public Boolean getReadStatus() {

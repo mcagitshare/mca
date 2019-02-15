@@ -2,7 +2,7 @@ package com.mca.Realm;
 
 import android.util.Log;
 
-import com.mca.Model.Contact;
+import com.mca.Model.Group;
 import com.mca.Model.Event;
 import com.mca.Model.Item;
 import com.mca.Model.Message;
@@ -10,7 +10,6 @@ import com.mca.Model.ReqResp;
 
 import io.realm.Case;
 import io.realm.Realm;
-import io.realm.RealmModel;
 import io.realm.RealmResults;
 
 public class RealmClass {
@@ -43,11 +42,11 @@ public class RealmClass {
         });
     }
 
-    public static void InsertContact(Realm realm, final Contact contact) {
+    public static void InsertContact(Realm realm, final Group group) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.insertOrUpdate(contact);
+                realm.insertOrUpdate(group);
             }
         });
     }
@@ -79,12 +78,12 @@ public class RealmClass {
         return list;
     }
 
-    public static RealmResults<Contact> searchContactData(String search) {
-        RealmResults<Contact> list = null;
+    public static RealmResults<Group> searchContactData(String search) {
+        RealmResults<Group> list = null;
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
-            list = realm.where(Contact.class)
+            list = realm.where(Group.class)
                     .contains(name, search, Case.INSENSITIVE)
                     .findAll();
         } catch (Exception ex) {

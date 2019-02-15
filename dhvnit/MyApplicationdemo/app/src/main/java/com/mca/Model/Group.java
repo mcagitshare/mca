@@ -4,7 +4,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-public class Contact extends RealmObject {
+public class Group extends RealmObject {
 
     @PrimaryKey
     private String Id;
@@ -16,11 +16,12 @@ public class Contact extends RealmObject {
     private String Image;
     private String Phone;
     private Boolean ReadStatus;
+    private Boolean AccRej;
 
-    public Contact() {
+    public Group() {
     }
 
-    public Contact(String id, String groupId, String contactId, String name, String image, String phone, Boolean readStatus) {
+    public Group(String id, String groupId, String contactId, String name, String image, String phone, Boolean readStatus,Boolean accRej) {
         Id = id;
         GroupId = groupId;
         ContactId = contactId;
@@ -28,6 +29,15 @@ public class Contact extends RealmObject {
         Image = image;
         Phone = phone;
         ReadStatus = readStatus;
+        AccRej = accRej;
+    }
+
+    public Boolean getAccRej() {
+        return AccRej;
+    }
+
+    public void setAccRej(Boolean accRej) {
+        AccRej = accRej;
     }
 
     public Boolean getReadStatus() {

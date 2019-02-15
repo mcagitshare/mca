@@ -70,12 +70,12 @@ public class EventsFragment extends Fragment {
         return view;
     }
 
-    public void deleteItem(String itemId) {
-        realmController.deleteItem(itemId);
+    public void deleteEventData(String itemId) {
+        realmController.deleteEventData(itemId);
     }
 
-    public void editEvent(String id, Boolean readStatus) {
-        realmController.editEvent(id, readStatus);
+    public void editEvent(String id, Boolean readStatus, Boolean accRej) {
+        realmController.editEvent(id, readStatus, accRej);
         Utils.hideKeyboard(getActivity());
     }
 

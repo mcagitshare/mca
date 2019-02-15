@@ -19,10 +19,12 @@ public class MessagesJob extends Job {
     String DisplayMessage, Icon, Option;
     String id = UUID.randomUUID() + "";
     Boolean ReadStatus;
+    Boolean AccRej;
 
-    public MessagesJob(String displayMessage, String icon, String option, Boolean readStatus) {
+    public MessagesJob(String displayMessage, String icon, String option, Boolean readStatus, Boolean accRej) {
         super(new Params(1).requireNetwork());
         DisplayMessage = displayMessage;
+        AccRej = accRej;
         Icon = icon;
         ReadStatus = readStatus;
         Option = option;
@@ -38,7 +40,7 @@ public class MessagesJob extends Job {
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
-            Message message = new Message(id, DisplayMessage, Icon, Option, ReadStatus);
+            Message message = new Message(id, DisplayMessage, Icon, Option, ReadStatus, AccRej);
             RealmClass.InsertMessage(realm, message);
         } catch (Exception ex) {
             ex.printStackTrace();

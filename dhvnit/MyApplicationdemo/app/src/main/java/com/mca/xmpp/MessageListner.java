@@ -1,13 +1,9 @@
 package com.mca.xmpp;
 
-import android.provider.ContactsContract;
-import android.util.Log;
-
 import com.birbit.android.jobqueue.JobManager;
 import com.mca.Application.DemoApplication;
-import com.mca.Job.ContactJob;
+import com.mca.Job.GroupJob;
 import com.mca.Job.EventsJob;
-import com.mca.Job.GetTotalCountJob;
 import com.mca.Job.MessagesJob;
 import com.mca.Utils.Utils;
 
@@ -56,6 +52,7 @@ public class MessageListner implements StanzaListener, StanzaFilter {
 
                         //  add the event to Event List
                         Boolean readStatus = false;
+                        Boolean accRej = false;
                         String eventName = messageObj.getString("eventname");
                         String icon = messageObj.getString("icon");
                         String dateFrom = messageObj.getString("datefrom");
@@ -70,7 +67,7 @@ public class MessageListner implements StanzaListener, StanzaFilter {
                             }
                         }
 
-                        jobManager.addJobInBackground(new EventsJob(eventName, icon, dateFrom, dateTo, option, readStatus));
+                        jobManager.addJobInBackground(new EventsJob(eventName, icon, dateFrom, dateTo, option, readStatus, accRej));
                     }
 /*                    if (message.getType().equals("normal/event/u")) {
                         //  Update the event to Event List
@@ -84,6 +81,7 @@ public class MessageListner implements StanzaListener, StanzaFilter {
 
                         // add the message to Message List
                         Boolean readStatus = false;
+                        Boolean accRej = false;
                         String displayMessage = messageObj.getString("displaymessage");
                         String icon = messageObj.getString("icon");
 
@@ -95,32 +93,33 @@ public class MessageListner implements StanzaListener, StanzaFilter {
                                 option = jobOptions.getString("option");
                             }
                         }
-                        jobManager.addJobInBackground(new MessagesJob(displayMessage, icon, option, readStatus));
+                        jobManager.addJobInBackground(new MessagesJob(displayMessage, icon, option, readStatus, accRej));
 
                     }
 /*                    if (message.getType().equals("normal/message/d")) {
                         // delete the message to Message List
                     }*/
                     if (messageObj.getInt("type") == 103) {
-                        // add the contact to Contact List
+                        // add the contact to Group List
                         Boolean readStatus = false;
+                        Boolean accRej = false;
                         String groupId = messageObj.getString("groupid");
                         String id = messageObj.getString("id");
                         String name = messageObj.getString("name");
                         String image = messageObj.getString("image");
                         String phone = messageObj.getString("phone");
 
-                        jobManager.addJobInBackground(new ContactJob(groupId, id, name, image, phone, readStatus));
+                        jobManager.addJobInBackground(new GroupJob(groupId, id, name, image, phone, readStatus, accRej));
                     }
 /*                    if (message.getType().equals("normal/vcard/u")) {
-                        // update the contact to Contact List
+                        // update the contact to Group List
                     }
                     if (message.getType().equals("normal/vcard/d")) {
-                        // delete the contact to Contact List
+                        // delete the contact to Group List
                     }*/
                 } catch (JSONException e) {
 
-                    jobManager.addJobInBackground(new MessagesJob(messageBody, null, null, false));
+                    jobManager.addJobInBackground(new MessagesJob(messageBody, null, null, false, true));
 
                     e.printStackTrace();
                 }

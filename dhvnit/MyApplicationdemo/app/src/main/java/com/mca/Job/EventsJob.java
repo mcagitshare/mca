@@ -19,12 +19,14 @@ public class EventsJob extends Job {
     String id = UUID.randomUUID() + "";
     String EventName, Icon, DateFrom, DateTo, Option;
     Boolean ReadStatus;
+    Boolean AccRej;
 
-    public EventsJob(String eventName, String icon, String dateFrom, String dateTo, String option, Boolean readStatus) {
+    public EventsJob(String eventName, String icon, String dateFrom, String dateTo, String option, Boolean readStatus, Boolean accRej) {
         super(new Params(1).requireNetwork());
         this.EventName = eventName;
         this.Icon = icon;
         ReadStatus = readStatus;
+        AccRej = accRej;
         this.DateFrom = dateFrom;
         this.DateTo = dateTo;
         this.Option = option;
@@ -35,7 +37,7 @@ public class EventsJob extends Job {
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
-            Event events = new Event(id, EventName, Icon, DateFrom, DateTo, Option, ReadStatus);
+            Event events = new Event(id, EventName, Icon, DateFrom, DateTo, Option, ReadStatus, AccRej);
             RealmClass.InsertEvent(realm, events);
         } catch (Exception ex) {
             ex.printStackTrace();

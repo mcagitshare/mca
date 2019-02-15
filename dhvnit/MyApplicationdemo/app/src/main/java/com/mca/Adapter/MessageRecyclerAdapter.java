@@ -1,8 +1,6 @@
 package com.mca.Adapter;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mca.Activity.ContactDetials;
-import com.mca.Fragment.EventsFragment;
 import com.mca.Fragment.MessagesFragment;
-import com.mca.Model.Event;
 import com.mca.Model.Message;
 import com.mca.R;
 
@@ -90,7 +86,7 @@ public class MessageRecyclerAdapter extends RealmRecyclerViewAdapter<Message, Me
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        activity.deleteItem(obj.getId());
+                        activity.deleteGroupData(obj.getId());
                     }
                 });
 
@@ -109,7 +105,7 @@ public class MessageRecyclerAdapter extends RealmRecyclerViewAdapter<Message, Me
             @Override
             public void onClick(View v) {
 
-                mActivity.editMessage(obj.getId(), true);
+                mActivity.editMessage(obj.getId(), true, obj.getAccRej());
 
                 Intent intent = new Intent(mActivity.getActivity(), ContactDetials.class);
                 intent.putExtra("Name", "Message");
@@ -120,13 +116,33 @@ public class MessageRecyclerAdapter extends RealmRecyclerViewAdapter<Message, Me
                 mActivity.startActivity(intent);
             }
         });
+
+        Boolean accRej = obj.getAccRej();
+        if (!accRej) {
+            holder.accept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.editMessage(obj.getId(), obj.getReadStatus(), true);
+                    holder.ll_acc_rej.setVisibility(View.GONE);
+                }
+            });
+
+            holder.reject.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.deleteMessageData(obj.getId());
+                    holder.ll_acc_rej.setVisibility(View.GONE);
+                }
+            });
+        } else
+            holder.ll_acc_rej.setVisibility(View.GONE);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView item_name, item_number;
-        private ImageView edit;
+        private ImageView edit, accept, reject;
         private CircleImageView image;
-        private LinearLayout ll_header;
+        private LinearLayout ll_header, ll_acc_rej;
 
         public MyViewHolder(View view) {
             super(view);
@@ -134,8 +150,12 @@ public class MessageRecyclerAdapter extends RealmRecyclerViewAdapter<Message, Me
             item_name = view.findViewById(R.id.item_name);
             item_number = view.findViewById(R.id.item_number);
             edit = view.findViewById(R.id.iv_edit);
+
+            ll_acc_rej = view.findViewById(R.id.ll_acc_rej);
             ll_header = view.findViewById(R.id.ll_header);
 
+            accept = view.findViewById(R.id.iv_accept);
+            reject = view.findViewById(R.id.iv_reject);
         }
     }
 }

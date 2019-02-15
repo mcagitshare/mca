@@ -80,12 +80,12 @@ public class GroupsFragment extends Fragment {
         return view;
     }
 
-    public void deleteItem(String itemId) {
-        realmController.deleteItem(itemId);
+    public void deleteGroupData(String itemId) {
+        realmController.deleteGroupData(itemId);
     }
 
-    public void editContact(String id, Boolean readStatus) {
-        realmController.editGroup(id, readStatus);
+    public void editGroup(String id, Boolean readStatus, boolean accRej) {
+        realmController.editGroup(id, readStatus, accRej);
         Utils.hideKeyboard(getActivity());
     }
 
