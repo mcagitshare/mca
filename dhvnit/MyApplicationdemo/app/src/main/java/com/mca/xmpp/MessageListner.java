@@ -47,7 +47,9 @@ public class MessageListner implements StanzaListener, StanzaFilter {
 
                     Utils.printLog("message stanza", message.toXML(null).toString());
 
-                    //Event
+                    /**
+                     * Event
+                     */
                     if (messageObj.getInt("type") == 101) {
 
                         //  add the event to Event List
@@ -76,7 +78,10 @@ public class MessageListner implements StanzaListener, StanzaFilter {
                         //  Delete the event to Event List
                     }*/
 
-                    //Message
+
+                    /**
+                     * Message
+                     */
                     if (messageObj.getInt("type") == 100) {
 
                         // add the message to Message List
@@ -96,9 +101,17 @@ public class MessageListner implements StanzaListener, StanzaFilter {
                         jobManager.addJobInBackground(new MessagesJob(displayMessage, icon, option, readStatus, accRej));
 
                     }
-/*                    if (message.getType().equals("normal/message/d")) {
+
+                    /*if (message.getType().equals("normal/message/d")) {
                         // delete the message to Message List
                     }*/
+
+
+                    /**
+                     * Group
+                     *
+                     * */
+
                     if (messageObj.getInt("type") == 103) {
                         // add the contact to Group List
                         Boolean readStatus = false;
@@ -111,7 +124,8 @@ public class MessageListner implements StanzaListener, StanzaFilter {
 
                         jobManager.addJobInBackground(new GroupJob(groupId, id, name, image, phone, readStatus, accRej));
                     }
-/*                    if (message.getType().equals("normal/vcard/u")) {
+
+                    /*if (message.getType().equals("normal/vcard/u")) {
                         // update the contact to Group List
                     }
                     if (message.getType().equals("normal/vcard/d")) {

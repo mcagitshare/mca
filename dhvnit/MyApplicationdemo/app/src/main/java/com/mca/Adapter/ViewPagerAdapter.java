@@ -15,6 +15,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     int tabCount;
     Context context;
+    private String mSearchTerm;
 
     //Constructor to the class
     public ViewPagerAdapter(Context context, FragmentManager fm, int tabCount) {

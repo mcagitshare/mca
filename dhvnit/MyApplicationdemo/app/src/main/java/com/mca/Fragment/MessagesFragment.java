@@ -1,12 +1,19 @@
 package com.mca.Fragment;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -37,6 +44,7 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -79,17 +87,6 @@ public class MessagesFragment extends Fragment {
         Utils.hideKeyboard(getActivity());
     }
 
-    public void search(String query) {
-
-        if (query.isEmpty()) {
-            adapter = new MessageRecyclerAdapter(MessagesFragment.this, realmController.getMessages());
-            recyclerView.setAdapter(adapter);
-        } else {
-            adapter = new MessageRecyclerAdapter(MessagesFragment.this, RealmClass.searchMessagesData(query));
-            recyclerView.setAdapter(adapter);
-        }
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -98,5 +95,49 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("onQueryTextSubmit", query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                Log.i("onQueryTextChange", query);
+                if (query.isEmpty()) {
+                    adapter = new MessageRecyclerAdapter(MessagesFragment.this, realmController.getMessages());
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    adapter = new MessageRecyclerAdapter(MessagesFragment.this, RealmClass.searchMessagesData(query));
+                    recyclerView.setAdapter(adapter);
+                }
+                return true;
+            }
+
+        });
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                // Not implemented here
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

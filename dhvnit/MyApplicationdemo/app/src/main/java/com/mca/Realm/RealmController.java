@@ -6,6 +6,7 @@ import android.app.Application;
 import com.mca.Model.Group;
 import com.mca.Model.Event;
 import com.mca.Model.Item;
+import com.mca.Model.JsonData;
 import com.mca.Model.Message;
 
 import io.realm.Realm;
@@ -56,6 +57,10 @@ public class RealmController {
         });
     }
 
+    public RealmResults<JsonData> getJson() {
+        return realm.where(JsonData.class).findAllSorted("JsonString");
+    }
+
     public RealmResults<Message> getMessages() {
         return realm.where(Message.class).findAllSorted("DisplayMessage");
     }
@@ -72,7 +77,7 @@ public class RealmController {
         });
     }
 
-    public RealmResults<Group> getContacts() {
+    public RealmResults<Group> getGroups() {
         return realm.where(Group.class).findAllSorted("Name");
     }
 

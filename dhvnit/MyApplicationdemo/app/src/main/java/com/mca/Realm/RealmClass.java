@@ -5,6 +5,7 @@ import android.util.Log;
 import com.mca.Model.Group;
 import com.mca.Model.Event;
 import com.mca.Model.Item;
+import com.mca.Model.JsonData;
 import com.mca.Model.Message;
 import com.mca.Model.ReqResp;
 
@@ -42,7 +43,16 @@ public class RealmClass {
         });
     }
 
-    public static void InsertContact(Realm realm, final Group group) {
+    public static void InsertJson(Realm realm, final JsonData jsonData) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(jsonData);
+            }
+        });
+    }
+
+    public static void InsertGroup(Realm realm, final Group group) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -78,13 +88,13 @@ public class RealmClass {
         return list;
     }
 
-    public static RealmResults<Group> searchContactData(String search) {
+    public static RealmResults<Group> searchGroupData(String search) {
         RealmResults<Group> list = null;
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
             list = realm.where(Group.class)
-                    .contains(name, search, Case.INSENSITIVE)
+                    .contains("Name", search, Case.INSENSITIVE)
                     .findAll();
         } catch (Exception ex) {
             Log.e("TAG", ex.getLocalizedMessage());
@@ -120,7 +130,7 @@ public class RealmClass {
         try {
             realm = Realm.getDefaultInstance();
             list = realm.where(Event.class)
-                    .contains(name, search, Case.INSENSITIVE)
+                    .contains("EventName", search, Case.INSENSITIVE)
                     .findAll();
         } catch (Exception ex) {
             Log.e("TAG", ex.getLocalizedMessage());

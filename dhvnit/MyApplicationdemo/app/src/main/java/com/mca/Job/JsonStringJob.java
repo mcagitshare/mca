@@ -6,39 +6,36 @@ import android.support.annotation.Nullable;
 import com.birbit.android.jobqueue.Job;
 import com.birbit.android.jobqueue.Params;
 import com.birbit.android.jobqueue.RetryConstraint;
-import com.mca.Model.Group;
+import com.mca.Model.JsonData;
+import com.mca.Model.Message;
 import com.mca.Realm.RealmClass;
 
 import java.util.UUID;
 
 import io.realm.Realm;
 
-public class GroupJob extends Job {
+public class JsonStringJob extends Job {
 
     String id = UUID.randomUUID() + "";
-    String GroupId, ContactId, Name, Image, Phone;
-    Boolean ReadStatus;
-    Boolean AccRej;
+    String JsonString;
 
-    public GroupJob(String groupId, String contactId, String name, String image, String phone, Boolean readStatus, Boolean accRej) {
+    public JsonStringJob(String jsonString) {
         super(new Params(1).requireNetwork());
-        GroupId = groupId;
-        ContactId = contactId;
-        Name = name;
-        AccRej = accRej;
-        ReadStatus = readStatus;
-        Image = image;
-        Phone = phone;
+        JsonString = jsonString;
     }
-
 
     @Override
     public void onAdded() {
+
+    }
+
+    @Override
+    public void onRun() throws Throwable {
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
-            Group group = new Group(id, GroupId, ContactId, Name, Image, Phone, ReadStatus, AccRej);
-            RealmClass.InsertGroup(realm, group);
+            JsonData jsonData = new JsonData(id, JsonString);
+            RealmClass.InsertJson(realm, jsonData);
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -49,11 +46,8 @@ public class GroupJob extends Job {
     }
 
     @Override
-    public void onRun() throws Throwable {
-    }
-
-    @Override
     protected void onCancel(int cancelReason, @Nullable Throwable throwable) {
+
     }
 
     @Override
