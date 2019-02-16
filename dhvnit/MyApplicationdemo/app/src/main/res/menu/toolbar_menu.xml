@@ -12,7 +12,5 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/menu"
-        android:icon="@drawable/ic_menu"
-        android:title="menu"
-        app:showAsAction="always" />
+        android:title="menu" />
 </menu>
