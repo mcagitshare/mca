@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.mca.Fragment.ContactFragment;
 import com.mca.Fragment.GroupsFragment;
 import com.mca.Fragment.EventsFragment;
 import com.mca.Fragment.MessagesFragment;
@@ -34,6 +35,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 return new EventsFragment();
             case 2:
                 return new GroupsFragment();
+            case 3:
+                return new ContactFragment();
             default:
                 return new MessagesFragment();
         }
@@ -53,6 +56,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 return context.getString(R.string.events);
             case 2:
                 return context.getString(R.string.group);
+            case 3:
+                return context.getString(R.string.contacts);
             default:
                 return null;
         }

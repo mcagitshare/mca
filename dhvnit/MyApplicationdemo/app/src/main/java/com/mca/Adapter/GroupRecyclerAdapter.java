@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.mca.Activity.ContactDetials;
+import com.mca.Activity.ContactDetails;
 import com.mca.Fragment.GroupsFragment;
 import com.mca.Model.Group;
 import com.mca.R;
@@ -108,12 +108,13 @@ public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Group, GroupR
 
                 mActivity.editGroup(obj.getId(), true, obj.getAccRej());
 
-                Intent intent = new Intent(mActivity.getActivity(), ContactDetials.class);
+                Intent intent = new Intent(mActivity.getActivity(), ContactDetails.class);
                 intent.putExtra("Name", "Group Name");
                 intent.putExtra("name", obj.getName());
                 intent.putExtra("phone", obj.getPhone());
                 intent.putExtra("image", obj.getImage());
                 intent.putExtra("id", obj.getId());
+                intent.putExtra("type", 103);
                 mActivity.startActivity(intent);
             }
         });

@@ -39,17 +39,21 @@ public class MessageListner implements StanzaListener, StanzaFilter {
 
             Message message = (Message) stazna;
             String messageBody = message.getBody();
+            String messageFrom = message.getFrom().toString();
 
             if (messageBody != null && !messageBody.isEmpty()) {
 
-                try {
+
+                jobManager.addJobInBackground(new MessagesJob(messageFrom, null, null, null, false, false, messageBody, 1));
+
+                /*try {
                     JSONObject messageObj = new JSONObject(messageBody);
 
                     Utils.printLog("message stanza", message.toXML(null).toString());
 
-                    /**
-                     * Event
-                     */
+                    *//**
+                 * Event
+                 *//*
                     if (messageObj.getInt("type") == 101) {
 
                         //  add the event to Event List
@@ -71,17 +75,17 @@ public class MessageListner implements StanzaListener, StanzaFilter {
 
                         jobManager.addJobInBackground(new EventsJob(eventName, icon, dateFrom, dateTo, option, readStatus, accRej));
                     }
-/*                    if (message.getType().equals("normal/event/u")) {
+*//*                    if (message.getType().equals("normal/event/u")) {
                         //  Update the event to Event List
                     }
                     if (message.getType().equals("normal/event/d")) {
                         //  Delete the event to Event List
-                    }*/
+                    }*//*
 
 
-                    /**
-                     * Message
-                     */
+                 *//**
+                 * Message
+                 *//*
                     if (messageObj.getInt("type") == 100) {
 
                         // add the message to Message List
@@ -102,15 +106,15 @@ public class MessageListner implements StanzaListener, StanzaFilter {
 
                     }
 
-                    /*if (message.getType().equals("normal/message/d")) {
+                    *//*if (message.getType().equals("normal/message/d")) {
                         // delete the message to Message List
-                    }*/
+                    }*//*
 
 
-                    /**
-                     * Group
-                     *
-                     * */
+                 *//**
+                 * Group
+                 *
+                 * *//*
 
                     if (messageObj.getInt("type") == 103) {
                         // add the contact to Group List
@@ -125,18 +129,18 @@ public class MessageListner implements StanzaListener, StanzaFilter {
                         jobManager.addJobInBackground(new GroupJob(groupId, id, name, image, phone, readStatus, accRej));
                     }
 
-                    /*if (message.getType().equals("normal/vcard/u")) {
+                    *//*if (message.getType().equals("normal/vcard/u")) {
                         // update the contact to Group List
                     }
                     if (message.getType().equals("normal/vcard/d")) {
                         // delete the contact to Group List
-                    }*/
+                    }*//*
                 } catch (JSONException e) {
 
                     jobManager.addJobInBackground(new MessagesJob(messageBody, null, null, false, true));
 
                     e.printStackTrace();
-                }
+                }*/
             } else {
                 Utils.printLog("Message : ", "didn't get");
             }

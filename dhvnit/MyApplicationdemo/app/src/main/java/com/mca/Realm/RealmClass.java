@@ -7,6 +7,7 @@ import com.mca.Model.Event;
 import com.mca.Model.Item;
 import com.mca.Model.JsonData;
 import com.mca.Model.Message;
+import com.mca.Model.MessageDetails;
 import com.mca.Model.ReqResp;
 
 import io.realm.Case;
@@ -158,5 +159,21 @@ public class RealmClass {
             }
         }
         return reqResps;
+    }
+
+    public static void InsertMessageDetail(Realm realm, final MessageDetails message) {
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(message);
+            }
+        });
+    }
+
+    public static Message getMessageDetail(Realm realm,String id) {
+        return realm.where(Message.class)
+                .equalTo("Id",id)
+                .findFirst();
     }
 }

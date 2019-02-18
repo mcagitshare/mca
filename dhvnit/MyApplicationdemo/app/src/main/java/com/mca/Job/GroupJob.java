@@ -15,12 +15,12 @@ import io.realm.Realm;
 
 public class GroupJob extends Job {
 
-    String id = UUID.randomUUID() + "";
+    String id;
     String GroupId, ContactId, Name, Image, Phone;
     Boolean ReadStatus;
     Boolean AccRej;
 
-    public GroupJob(String groupId, String contactId, String name, String image, String phone, Boolean readStatus, Boolean accRej) {
+    public GroupJob(String id, String groupId, String contactId, String name, String image, String phone, Boolean readStatus, Boolean accRej) {
         super(new Params(1).requireNetwork());
         GroupId = groupId;
         ContactId = contactId;
@@ -29,6 +29,7 @@ public class GroupJob extends Job {
         ReadStatus = readStatus;
         Image = image;
         Phone = phone;
+        this.id = id;
     }
 
 

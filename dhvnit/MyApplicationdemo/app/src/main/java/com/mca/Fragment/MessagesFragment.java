@@ -60,6 +60,8 @@ public class MessagesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
+        Utils.printLog("messageBody", realmController.getMessages() + "");
+
         adapter = new MessageRecyclerAdapter(this, realmController.getMessages());
         realmController.getRealm().addChangeListener(new RealmChangeListener<Realm>() {
             @Override

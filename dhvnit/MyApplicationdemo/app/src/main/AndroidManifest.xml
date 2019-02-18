@@ -20,7 +20,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity.NoInternetConnection"></activity>
+        <activity android:name=".Activity.MessageChatActivity"></activity>
+        <activity android:name=".Activity.NoInternetConnection" />
         <activity android:name=".Activity.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.ContactListActivity" />
-        <activity android:name=".Activity.ContactDetials" />
+        <activity android:name=".Activity.ContactDetails" />
         <activity android:name=".ExceptionHandlerActivity" />
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.OtpActivity" />

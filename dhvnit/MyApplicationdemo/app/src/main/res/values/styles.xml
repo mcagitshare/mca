@@ -27,6 +27,19 @@
     <style name="footer_txt_style">
         <item name="android:fontFamily">sans-serif</item>
     </style>
+
     <dimen name="txt_title_size">18sp</dimen>
 
+    <style name="chatTxtStyleSend">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:minWidth">55dp</item>
+        <item name="android:fontFamily">sans-serif</item>
+
+
+    </style>
 </resources>

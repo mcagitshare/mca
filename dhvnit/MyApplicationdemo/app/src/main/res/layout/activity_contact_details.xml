@@ -141,5 +141,35 @@
                 android:textColor="#777777"
                 android:textSize="18sp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_acc_rej"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_accept"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="0.5"
+                android:background="@android:color/holo_green_dark"
+                android:text="Accept"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btn_reject"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="0.5"
+                android:background="@android:color/holo_red_light"
+                android:text="Discard"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.mca.Activity.ContactDetials;
+import com.mca.Activity.ContactDetails;
 import com.mca.Fragment.EventsFragment;
 import com.mca.Model.Event;
 import com.mca.R;
@@ -106,12 +106,13 @@ public class EventRecyclerAdapter extends RealmRecyclerViewAdapter<Event, EventR
             public void onClick(View v) {
                 mActivity.editEvent(obj.getId(), true, obj.getAccRej());
 
-                Intent intent = new Intent(mActivity.getActivity(), ContactDetials.class);
+                Intent intent = new Intent(mActivity.getActivity(), ContactDetails.class);
                 intent.putExtra("Name", "Event Name");
                 intent.putExtra("name", obj.getEventName());
 //                intent.putExtra("phone", obj.getDateFrom());
                 intent.putExtra("image", obj.getIcon());
                 intent.putExtra("id", obj.getId());
+                intent.putExtra("type", 101);
                 mActivity.startActivity(intent);
             }
         });

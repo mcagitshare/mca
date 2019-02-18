@@ -16,12 +16,12 @@ import io.realm.Realm;
 
 public class EventsJob extends Job {
 
-    String id = UUID.randomUUID() + "";
+    String id;
     String EventName, Icon, DateFrom, DateTo, Option;
     Boolean ReadStatus;
     Boolean AccRej;
 
-    public EventsJob(String eventName, String icon, String dateFrom, String dateTo, String option, Boolean readStatus, Boolean accRej) {
+    public EventsJob(String id, String eventName, String icon, String dateFrom, String dateTo, String option, Boolean readStatus, Boolean accRej) {
         super(new Params(1).requireNetwork());
         this.EventName = eventName;
         this.Icon = icon;
@@ -30,6 +30,7 @@ public class EventsJob extends Job {
         this.DateFrom = dateFrom;
         this.DateTo = dateTo;
         this.Option = option;
+        this.id = id;
     }
 
     @Override

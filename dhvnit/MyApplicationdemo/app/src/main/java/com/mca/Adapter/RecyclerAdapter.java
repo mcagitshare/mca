@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.mca.Activity.ContactDetials;
+import com.mca.Activity.ContactDetails;
 import com.mca.Activity.ContactListActivity;
 import com.mca.Model.Item;
 import com.mca.R;
@@ -103,7 +103,7 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<Item, RecyclerAdap
         holder.ll_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, ContactDetials.class);
+                Intent intent = new Intent(activity, ContactDetails.class);
                 intent.putExtra("name", obj.getName());
                 intent.putExtra("phone", obj.getPhone());
                 intent.putExtra("image", obj.getImage());

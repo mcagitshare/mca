@@ -49,6 +49,17 @@
                 android:text="94584"
                 android:textColor="#777777"
                 android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/item_unread_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="unread - "
+                android:textColor="#777777"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <ImageView
@@ -58,10 +69,12 @@
             android:layout_gravity="center"
             android:layout_margin="8dp"
             android:padding="5dp"
-            android:src="@mipmap/edit" />
+            android:src="@mipmap/edit"
+            android:tint="@android:color/holo_red_light" />
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_acc_rej"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

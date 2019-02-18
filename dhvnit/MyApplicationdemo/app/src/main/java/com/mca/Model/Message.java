@@ -15,17 +15,50 @@ public class Message extends RealmObject {
     private String Option;
     private Boolean ReadStatus;
     private Boolean AccRej;
+    private String MessageBody;
+    private int UnReadCount = 1;
+    private long time;
+
+
 
     public Message() {
     }
 
-    public Message(String id, String displayMessage, String icon, String option, Boolean readStatus, Boolean accRej) {
+    public Message(String id, String displayMessage, String icon, String option, Boolean readStatus,
+                   Boolean accRej, String messageBody, int unReadCount,long Time) {
         Id = id;
+        UnReadCount = unReadCount;
         DisplayMessage = displayMessage;
+        MessageBody = messageBody;
         Icon = icon;
         Option = option;
         ReadStatus = readStatus;
         AccRej = accRej;
+        time = Time;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public int getUnReadCount() {
+        return UnReadCount;
+    }
+
+    public void setUnReadCount(int unReadCount) {
+        UnReadCount = unReadCount;
+    }
+
+    public String getMessageBody() {
+        return MessageBody;
+    }
+
+    public void setMessageBody(String messageBody) {
+        MessageBody = messageBody;
     }
 
     public Boolean getAccRej() {
