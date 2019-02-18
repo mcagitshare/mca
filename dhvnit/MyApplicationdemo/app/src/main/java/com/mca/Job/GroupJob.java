@@ -19,8 +19,10 @@ public class GroupJob extends Job {
     String GroupId, ContactId, Name, Image, Phone;
     Boolean ReadStatus;
     Boolean AccRej;
+    String option;
 
-    public GroupJob(String id, String groupId, String contactId, String name, String image, String phone, Boolean readStatus, Boolean accRej) {
+    public GroupJob(String id, String groupId, String contactId, String name, String image, String phone, String option,
+                    Boolean readStatus, Boolean accRej) {
         super(new Params(1).requireNetwork());
         GroupId = groupId;
         ContactId = contactId;
@@ -29,6 +31,7 @@ public class GroupJob extends Job {
         ReadStatus = readStatus;
         Image = image;
         Phone = phone;
+        this.option = option;
         this.id = id;
     }
 
@@ -38,7 +41,7 @@ public class GroupJob extends Job {
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
-            Group group = new Group(id, GroupId, ContactId, Name, Image, Phone, ReadStatus, AccRej);
+            Group group = new Group(id, GroupId, ContactId, Name, Image, Phone, option, ReadStatus, AccRej);
             RealmClass.InsertGroup(realm, group);
         } catch (Exception ex) {
             ex.printStackTrace();

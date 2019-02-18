@@ -46,7 +46,7 @@ public class MessagesJob extends Job {
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
-
+            String type = "normal";
             try {
                 JSONObject messageObj = new JSONObject(MessageBody);
 
@@ -55,20 +55,24 @@ public class MessagesJob extends Job {
                     //  add the event to Event List
                     DisplayMessage = messageObj.getString("displaymessage");
                     Icon = messageObj.getString("icon");
+                    type = "message";
                 }
                 if (messageObj.getInt("type") == 101) {
 
                     //  add the event to Event List
                     DisplayMessage = messageObj.getString("eventname");
                     Icon = messageObj.getString("icon");
+                    type = "event";
                 }
                 if (messageObj.getInt("type") == 103) {
 
                     //  add the event to Event List
                     DisplayMessage = messageObj.getString("name");
                     Icon = messageObj.getString("image");
+                    type = "group";
                 }
             } catch (JSONException e) {
+                DisplayMessage = MessageBody;
                 e.printStackTrace();
             }
 
@@ -77,10 +81,12 @@ public class MessagesJob extends Job {
             RealmClass.InsertMessageDetail(realm, messageDetails);
 
             // Adding parent.
-            
+            if (type != null && !type.equals("normal")) {
+                id = UUID.randomUUID().toString();
+            }
             Message message1 = RealmClass.getMessageDetail(realm, id);
             if (message1 == null) {
-                Message message = new Message(id, DisplayMessage, Icon, Option, ReadStatus, AccRej, MessageBody, UnReadCount, new Date().getTime());
+                Message message = new Message(id, DisplayMessage, Icon, Option, ReadStatus, AccRej, MessageBody, UnReadCount, new Date().getTime(), type);
                 RealmClass.InsertMessage(realm, message);
             } else {
                 RealmController.updateLastMessageDetail(realm, id, DisplayMessage);

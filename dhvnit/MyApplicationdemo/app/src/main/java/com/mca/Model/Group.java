@@ -17,11 +17,13 @@ public class Group extends RealmObject {
     private String Phone;
     private Boolean ReadStatus;
     private Boolean AccRej;
+    private String option;
 
     public Group() {
     }
 
-    public Group(String id, String groupId, String contactId, String name, String image, String phone, Boolean readStatus,Boolean accRej) {
+    public Group(String id, String groupId, String contactId, String name, String image, String phone,
+                 String option, Boolean readStatus, Boolean accRej) {
         Id = id;
         GroupId = groupId;
         ContactId = contactId;
@@ -30,6 +32,16 @@ public class Group extends RealmObject {
         Phone = phone;
         ReadStatus = readStatus;
         AccRej = accRej;
+        this.option = option;
+
+    }
+
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
     }
 
     public Boolean getAccRej() {

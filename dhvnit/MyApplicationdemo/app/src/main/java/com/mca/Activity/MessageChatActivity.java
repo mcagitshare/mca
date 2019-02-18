@@ -56,6 +56,6 @@ public class MessageChatActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.scrollToPosition(realmController.getMessageDetails().size() - 1);
 
-        RealmController.clearUnreadCountMessage(realmController.getRealm(),intent.getStringExtra("id"));
+
     }
 }

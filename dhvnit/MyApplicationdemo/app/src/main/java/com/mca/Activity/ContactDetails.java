@@ -40,6 +40,7 @@ public class ContactDetails extends AppCompatActivity {
     TextView tv_name;
     Toolbar toolbar;
 
+    LinearLayout phoneNo;
     Intent intent;
     Boolean acRej = true;
 
@@ -67,38 +68,24 @@ public class ContactDetails extends AppCompatActivity {
 
         findId();
 
+        if (intent.hasExtra("phone") && !intent.getStringExtra("phone").isEmpty()) {
+            phone.setText(intent.getStringExtra("phone"));
+        } else {
+            phoneNo.setVisibility(View.GONE);
+        }
+
         tv_name.setText(intent.getStringExtra("Name"));
         name.setText(intent.getStringExtra("name"));
-        phone.setText(intent.getStringExtra("phone"));
+
         id.setText(intent.getStringExtra("id"));
 
-        if (intent.getIntExtra("type", 0) == 100) {
-            try {
-                JSONObject jsonObject = new JSONObject(intent.getStringExtra("jsonMessage"));
-                int type = jsonObject.getInt("type");
-                if (type == 101) {
-                    Event event = realmController.getEventId(intent.getStringExtra("id"));
-                    if (event != null) {
-                        acRej = event.getAccRej();
-                    }
-                }
-                if (type == 100) {
-                    Message message = realmController.getMessageId(intent.getStringExtra("id"));
-                    if (message != null) {
-                        acRej = message.getAccRej();
-                        Toast.makeText(this, message.getUnReadCount() + "", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                if (type == 103) {
-                    Group group = realmController.getGroupId(intent.getStringExtra("id"));
-                    if (group != null) {
-                        acRej = group.getAccRej();
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
+        Message message = realmController.getMessageId(intent.getStringExtra("id"));
+        if (message != null) {
+            acRej = message.getAccRej();
+            Toast.makeText(this, message.getUnReadCount() + "", Toast.LENGTH_SHORT).show();
         }
+
 
         Glide.with(this)
                 .load(intent.getStringExtra("image"))
@@ -129,7 +116,8 @@ public class ContactDetails extends AppCompatActivity {
                                     option = jobOptions.getString("option");
                                 }
                             }
-                            jobManager.addJobInBackground(new EventsJob(intent.getStringExtra("id"), eventName, icon, dateFrom, dateTo, option, readStatus, accRej));
+                            jobManager.addJobInBackground(new EventsJob(intent.getStringExtra("id"),
+                                    eventName, icon, dateFrom, dateTo, option, readStatus, accRej));
                             deleteMessageData(intent.getStringExtra("id"));
                         }
 
@@ -143,8 +131,17 @@ public class ContactDetails extends AppCompatActivity {
                             String image = jsonObject.getString("image");
                             String phone = jsonObject.getString("phone");
 
+                            String option = null;
+                            JSONArray optionsArray = jsonObject.getJSONArray("options");
+                            for (int i = 0; i < optionsArray.length(); i++) {
+                                JSONObject jobOptions = optionsArray.getJSONObject(i);
+                                if (jobOptions.getInt("responecode") == 200) {
+                                    option = jobOptions.getString("option");
+                                }
+                            }
+
                             jobManager.addJobInBackground(new GroupJob(intent.getStringExtra("id"),
-                                    groupId, id, name, image, phone, readStatus, accRej));
+                                    groupId, id, name, image, phone, option, readStatus, accRej));
                             deleteMessageData(intent.getStringExtra("id"));
                         }
 
@@ -183,8 +180,9 @@ public class ContactDetails extends AppCompatActivity {
                     ll_acc_rej.setVisibility(View.GONE);
                 }
             });
-        } else
+        } else {
             ll_acc_rej.setVisibility(View.GONE);
+        }
     }
 
     public void deleteMessageData(String itemId) {
@@ -201,6 +199,7 @@ public class ContactDetails extends AppCompatActivity {
         ll_acc_rej = findViewById(R.id.ll_acc_rej);
         accept = findViewById(R.id.btn_accept);
         reject = findViewById(R.id.btn_reject);
+        phoneNo = findViewById(R.id.phoneNo);
     }
 
     @Override

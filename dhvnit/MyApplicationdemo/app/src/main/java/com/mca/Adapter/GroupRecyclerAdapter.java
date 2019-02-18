@@ -58,42 +58,7 @@ public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Group, GroupR
             holder.item_number.setText(obj.getPhone() + "");
         }
 
-/*        holder.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity.getActivity());
-                dialogBuilder.setTitle("Edit Item");
-                LayoutInflater inflater = activity.getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.edit_delete_layout, null);
-                dialogBuilder.setView(dialogView);
-
-                final EditText edt_name = dialogView.findViewById(R.id.edt_name);
-                final EditText edt_number = dialogView.findViewById(R.id.edt_number);
-                edt_name.setText(obj.getName());
-                edt_number.setText(obj.getPhone());
-                edt_name.setSelection(edt_name.getText().length());
-
-                dialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                        dialogInterface.dismiss();
-                        activity.editItem(obj.getId(), edt_name.getText().toString(), edt_number.getText().toString());
-                    }
-                });
-
-                dialogBuilder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        activity.deleteGroupData(obj.getId());
-                    }
-                });
-
-                AlertDialog alertDialog = dialogBuilder.create();
-                alertDialog.show();
-            }
-        });*/
+        holder.item_unread_count.setVisibility(View.GONE);
 
         Boolean read = obj.getReadStatus();
         if (!read) {
@@ -141,7 +106,7 @@ public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Group, GroupR
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView item_name, item_number;
+        private TextView item_name, item_number, item_unread_count;
         private ImageView edit, accept, reject;
         private CircleImageView image;
         private LinearLayout ll_header, ll_acc_rej;
@@ -158,6 +123,7 @@ public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Group, GroupR
 
             accept = view.findViewById(R.id.iv_accept);
             reject = view.findViewById(R.id.iv_reject);
+            item_unread_count = view.findViewById(R.id.item_unread_count);
         }
     }
 }

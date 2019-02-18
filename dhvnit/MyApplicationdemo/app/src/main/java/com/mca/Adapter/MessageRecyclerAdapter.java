@@ -16,19 +16,23 @@ import com.mca.Activity.MessageChatActivity;
 import com.mca.Fragment.MessagesFragment;
 import com.mca.Model.Message;
 import com.mca.R;
+import com.mca.Realm.RealmController;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.OrderedRealmCollection;
+import io.realm.Realm;
 import io.realm.RealmRecyclerViewAdapter;
 
 public class MessageRecyclerAdapter extends RealmRecyclerViewAdapter<Message, MessageRecyclerAdapter.MyViewHolder> {
 
     MessagesFragment mActivity;
+    Realm realm;
 
     public MessageRecyclerAdapter(MessagesFragment activity,
-                                  OrderedRealmCollection<Message> data) {
+                                  OrderedRealmCollection<Message> data, Realm realm) {
         super(data, true);
         this.mActivity = activity;
+        this.realm = realm;
     }
 
     public void refreshData() {
@@ -71,9 +75,15 @@ public class MessageRecyclerAdapter extends RealmRecyclerViewAdapter<Message, Me
             public void onClick(View v) {
 
                 mActivity.editMessage(obj.getId(), true, obj.getAccRej());
+                RealmController.clearUnreadCountMessage(realm, obj.getId());
 
-//                Intent intent = new Intent(mActivity.getActivity(), ContactDetails.class);
-                Intent intent = new Intent(mActivity.getActivity(), MessageChatActivity.class);
+                Intent intent;
+                if (obj.getType() != null && obj.getType().equals("normal")) {
+                    intent = new Intent(mActivity.getActivity(), MessageChatActivity.class);
+                } else {
+                    intent = new Intent(mActivity.getActivity(), ContactDetails.class);
+                }
+
                 intent.putExtra("Name", "Message");
                 intent.putExtra("name", obj.getDisplayMessage());
                 intent.putExtra("option", obj.getOption());

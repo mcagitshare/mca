@@ -1,23 +1,15 @@
 package com.mca.Adapter;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.mca.Activity.MessageChatActivity;
-import com.mca.Fragment.MessagesFragment;
-import com.mca.Model.Message;
 import com.mca.Model.MessageDetails;
 import com.mca.R;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
@@ -29,10 +21,6 @@ public class MessageChatRecyclerAdapter extends RealmRecyclerViewAdapter<Message
                                       OrderedRealmCollection<MessageDetails> data) {
         super(data, true);
         this.mActivity = activity;
-    }
-
-    public void refreshData() {
-        this.notifyDataSetChanged();
     }
 
     @Override

@@ -62,7 +62,7 @@ public class MessagesFragment extends Fragment {
 
         Utils.printLog("messageBody", realmController.getMessages() + "");
 
-        adapter = new MessageRecyclerAdapter(this, realmController.getMessages());
+        adapter = new MessageRecyclerAdapter(this, realmController.getMessages(), realmController.getRealm());
         realmController.getRealm().addChangeListener(new RealmChangeListener<Realm>() {
             @Override
             public void onChange(Realm element) {
@@ -118,10 +118,12 @@ public class MessagesFragment extends Fragment {
             public boolean onQueryTextChange(String query) {
                 Log.i("onQueryTextChange", query);
                 if (query.isEmpty()) {
-                    adapter = new MessageRecyclerAdapter(MessagesFragment.this, realmController.getMessages());
+                    adapter = new MessageRecyclerAdapter(MessagesFragment.this,
+                            realmController.getMessages(), realmController.getRealm());
                     recyclerView.setAdapter(adapter);
                 } else {
-                    adapter = new MessageRecyclerAdapter(MessagesFragment.this, RealmClass.searchMessagesData(query));
+                    adapter = new MessageRecyclerAdapter(MessagesFragment.this,
+                            RealmClass.searchMessagesData(query), realmController.getRealm());
                     recyclerView.setAdapter(adapter);
                 }
                 return true;

@@ -1,5 +1,7 @@
 package com.mca.Model;
 
+import java.util.UUID;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -18,14 +20,15 @@ public class Message extends RealmObject {
     private String MessageBody;
     private int UnReadCount = 1;
     private long time;
-
+    private String type;
 
 
     public Message() {
     }
 
     public Message(String id, String displayMessage, String icon, String option, Boolean readStatus,
-                   Boolean accRej, String messageBody, int unReadCount,long Time) {
+                   Boolean accRej, String messageBody, int unReadCount, long Time, String type) {
+
         Id = id;
         UnReadCount = unReadCount;
         DisplayMessage = displayMessage;
@@ -35,6 +38,15 @@ public class Message extends RealmObject {
         ReadStatus = readStatus;
         AccRej = accRej;
         time = Time;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public long getTime() {
