@@ -26,7 +26,7 @@ public class MessageChatRecyclerAdapter extends RealmRecyclerViewAdapter<Message
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.chat_layout, parent, false);
+                .inflate(R.layout.right_chat_bubble, parent, false);
         return new MyViewHolder(itemView);
     }
 

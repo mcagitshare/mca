@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mca.Activity.ContactDetails;
+import com.mca.Activity.ContactListActivity;
 import com.mca.Fragment.GroupsFragment;
 import com.mca.Model.Group;
 import com.mca.R;
@@ -73,8 +74,9 @@ public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Group, GroupR
 
                 mActivity.editGroup(obj.getId(), true, obj.getAccRej());
 
-                Intent intent = new Intent(mActivity.getActivity(), ContactDetails.class);
+                Intent intent = new Intent(mActivity.getActivity(), ContactListActivity.class);
                 intent.putExtra("Name", "Group Name");
+                intent.putExtra("groupId", obj.getGroupId());
                 intent.putExtra("name", obj.getName());
                 intent.putExtra("phone", obj.getPhone());
                 intent.putExtra("image", obj.getImage());
@@ -84,25 +86,7 @@ public class GroupRecyclerAdapter extends RealmRecyclerViewAdapter<Group, GroupR
             }
         });
 
-        Boolean accRej = obj.getAccRej();
-        if (!accRej) {
-            holder.accept.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mActivity.editGroup(obj.getId(), obj.getReadStatus(), true);
-                    holder.ll_acc_rej.setVisibility(View.GONE);
-                }
-            });
-
-            holder.reject.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mActivity.deleteGroupData(obj.getId());
-                    holder.ll_acc_rej.setVisibility(View.GONE);
-                }
-            });
-        } else
-            holder.ll_acc_rej.setVisibility(View.GONE);
+        holder.ll_acc_rej.setVisibility(View.GONE);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

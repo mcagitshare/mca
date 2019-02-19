@@ -15,15 +15,25 @@ public class Item extends RealmObject {
     private String name;
     private String phone;
     private String image;
+    private String group_id;
 
     public Item() {
     }
 
-    public Item(String id, String name, String phone, String image) {
+    public Item(String id, String name, String phone, String image, String group_id) {
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.image = image;
+        this.group_id = group_id;
+    }
+
+    public String getGroup_id() {
+        return group_id;
+    }
+
+    public void setGroup_id(String group_id) {
+        this.group_id = group_id;
     }
 
     public String getId() {

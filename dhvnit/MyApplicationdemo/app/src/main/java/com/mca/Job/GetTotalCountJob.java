@@ -69,7 +69,8 @@ public class GetTotalCountJob extends Job {
                     for (int i = 0; i <= Integer.valueOf(count) / 50; i++) {
                         Log.e("value", i + " -> " + count);
                         last++;
-                        jobManager.addJobInBackground(new ContactJobInsert(last));
+                        jobManager.addJobInBackground(new
+                                ContactJobInsert(last + "", "0", "0", "0", "0"));
                     }
                     Log.e("result", result);
                 } catch (Exception e) {

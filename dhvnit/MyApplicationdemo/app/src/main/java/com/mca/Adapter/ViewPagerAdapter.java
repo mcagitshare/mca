@@ -9,7 +9,6 @@ import com.mca.Fragment.ContactFragment;
 import com.mca.Fragment.GroupsFragment;
 import com.mca.Fragment.EventsFragment;
 import com.mca.Fragment.MessagesFragment;
-import com.mca.Fragment.OnlyMessageFragment;
 import com.mca.R;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {

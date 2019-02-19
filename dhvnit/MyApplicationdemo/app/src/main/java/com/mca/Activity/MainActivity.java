@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 jobManager.addJobInBackground(new GetTotalCountJob());
 
                 intent = new Intent(this, ContactListActivity.class);
+                intent.putExtra("groupId", "1");
+                intent.putExtra("name", "Contacts");
                 startActivity(intent);
                 break;
 

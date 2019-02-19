@@ -16,6 +16,7 @@ import com.birbit.android.jobqueue.JobManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.mca.Application.DemoApplication;
+import com.mca.Job.ContactJobInsert;
 import com.mca.Job.EventsJob;
 import com.mca.Job.GroupJob;
 import com.mca.Job.MessagesJob;
@@ -64,7 +65,8 @@ public class ContactDetails extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.white),
+                PorterDuff.Mode.SRC_ATOP);
 
         findId();
 
@@ -76,16 +78,12 @@ public class ContactDetails extends AppCompatActivity {
 
         tv_name.setText(intent.getStringExtra("Name"));
         name.setText(intent.getStringExtra("name"));
-
         id.setText(intent.getStringExtra("id"));
-
 
         Message message = realmController.getMessageId(intent.getStringExtra("id"));
         if (message != null) {
             acRej = message.getAccRej();
-            Toast.makeText(this, message.getUnReadCount() + "", Toast.LENGTH_SHORT).show();
         }
-
 
         Glide.with(this)
                 .load(intent.getStringExtra("image"))
@@ -140,8 +138,7 @@ public class ContactDetails extends AppCompatActivity {
                                 }
                             }
 
-                            jobManager.addJobInBackground(new GroupJob(intent.getStringExtra("id"),
-                                    groupId, id, name, image, phone, option, readStatus, accRej));
+                            jobManager.addJobInBackground(new ContactJobInsert(id, name, phone, image, groupId));
                             deleteMessageData(intent.getStringExtra("id"));
                         }
 
@@ -150,6 +147,8 @@ public class ContactDetails extends AppCompatActivity {
                             // add the message to Message List
                             Boolean readStatus = false;
                             Boolean accRej = false;
+                            String groupId = jsonObject.getString("groupid");
+                            String displayName = jsonObject.getString("displayname");
                             String displayMessage = jsonObject.getString("displaymessage");
                             String icon = jsonObject.getString("icon");
 
@@ -161,9 +160,12 @@ public class ContactDetails extends AppCompatActivity {
                                     option = jobOptions.getString("option");
                                 }
                             }
+                            jobManager.addJobInBackground(new GroupJob(intent.getStringExtra("id"),
+                                    groupId, "0", displayName, icon, "0", option, readStatus, accRej));
                             deleteMessageData(intent.getStringExtra("id"));
-                            jobManager.addJobInBackground(new MessagesJob(intent.getStringExtra("id"),
-                                    displayMessage, icon, option, readStatus, accRej, intent.getStringExtra("jsonMessage"), 0));
+//                            jobManager.addJobInBackground(new MessagesJob(intent.getStringExtra("id"),
+//                                    displayMessage, icon, option, readStatus, accRej,
+//                                    intent.getStringExtra("jsonMessage"), 0));
 
                         }
                     } catch (JSONException e) {

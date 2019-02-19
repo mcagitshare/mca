@@ -19,16 +19,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.birbit.android.jobqueue.JobManager;
-import com.mca.Activity.ContactListActivity;
 import com.mca.Adapter.EventRecyclerAdapter;
-import com.mca.Adapter.GroupRecyclerAdapter;
-import com.mca.Adapter.RecyclerAdapter;
 import com.mca.Adapter.SimpleDividerItemDecoration;
 import com.mca.Application.DemoApplication;
 import com.mca.R;
 import com.mca.Realm.RealmClass;
 import com.mca.Realm.RealmController;
-import com.mca.Utils.Constants;
 import com.mca.Utils.Utils;
 
 import io.realm.Realm;

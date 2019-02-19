@@ -26,16 +26,24 @@ import java.util.UUID;
 import io.realm.Realm;
 
 public class ContactJobInsert extends Job {
-    int batchid;
-    String id = UUID.randomUUID() + "";
-    boolean processed;
-    String response = "";
+    private String batchid;
+    private String id = UUID.randomUUID() + "";
+    private boolean processed;
+    private String response = "";
     private long requestTime = 0, responseTime = 0;
+    private String groupId;
+    private String name;
+    private String phone;
+    private String image;
 
-    public ContactJobInsert(int batchid) {
+    public ContactJobInsert(String batchid, String name, String phone, String image, String groupid) {
 
         super(new Params(1).requireNetwork());
         this.batchid = batchid;
+        this.name = name;
+        this.phone = phone;
+        this.image = image;
+        this.groupId = groupid;
     }
 
     @Override
@@ -46,7 +54,7 @@ public class ContactJobInsert extends Job {
         try {
             realm = Realm.getDefaultInstance();
 
-            ReqResp reqResp = new ReqResp(id, batchid, processed, response, requestTime, responseTime);
+            ReqResp reqResp = new ReqResp(id, batchid, processed, response, requestTime, responseTime, groupId);
             RealmClass.InsertReqResp(realm, reqResp);
 
         } catch (Exception e) {
@@ -63,48 +71,55 @@ public class ContactJobInsert extends Job {
 
         ReqResp reqResp = RealmClass.getBatchdata(batchid);
         processed = reqResp.isProcessed();
-        int bId = reqResp.getBatchId();
+        String bId = reqResp.getBatchId();
 
         if (!processed) {
 
             String response = getContacts(bId);
-
             Realm realm = null;
-            try {
 
-                realm = Realm.getDefaultInstance();
-                JSONArray jsonArray = new JSONArray(response);
-                for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("message", "No contacts found.");
 
-                    try {
-                        JSONObject job = jsonArray.getJSONObject(i);
+            realm = Realm.getDefaultInstance();
+            if (response.equals(jsonObject.toString())) {
+                Item item = new Item(id, name, phone, image, groupId);
+                RealmClass.InsertItem(realm, item);
+            } else {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
 
-                        String id = job.getString("id").trim();
-                        String name = job.getString("name").trim();
-                        String image = job.getString("image").trim();
-                        String phone = job.getString("phone").trim();
+                        try {
+                            JSONObject job = jsonArray.getJSONObject(i);
 
-                        Item item = new Item(id, name, phone, image);
-                        RealmClass.InsertItem(realm, item);
-                    } catch (Exception ex) {
-                        Log.e("Exception", response);
-                        ex.printStackTrace();
+                            String id = job.getString("id").trim();
+                            String name = job.getString("name").trim();
+                            String image = job.getString("image").trim();
+                            String phone = job.getString("phone").trim();
+
+                            Item item = new Item(id, name, phone, image, "0");
+                            RealmClass.InsertItem(realm, item);
+                        } catch (Exception ex) {
+                            Log.e("Exception", response);
+                            ex.printStackTrace();
+                        }
                     }
-                }
-                processed = true;
-                Log.e("BatchData", "ID:" + id + "bId" + bId + "reeponse" + response);
-                ReqResp data = new ReqResp(id, bId, processed, response, requestTime, responseTime);
-                RealmClass.InsertReqResp(realm, data);
+                    processed = true;
+                    Log.e("BatchData", "ID:" + id + "bId" + bId + "reeponse" + response);
+                    ReqResp data = new ReqResp(id, bId, processed, response, requestTime, responseTime, groupId);
+                    RealmClass.InsertReqResp(realm, data);
 
-            } finally {
-                if (realm != null) {
-                    realm.close();
+                } finally {
+                    if (realm != null) {
+                        realm.close();
+                    }
                 }
             }
         }
     }
 
-    private String getContacts(int batchid) {
+    private String getContacts(String batchid) {
 
         String result = null;
         try {

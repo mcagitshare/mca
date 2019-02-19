@@ -8,21 +8,32 @@ public class ReqResp extends RealmObject {
     @PrimaryKey
     private String id;
 
-    private int batchId;
+    private String batchId;
     private boolean processed;
     private long requestTime, responseTime;
     private String response;
+    private String groupId;
 
     public ReqResp() {
     }
 
-    public ReqResp(String id, int batchId, boolean processed, String response, long requestTime, long responseTime) {
+    public ReqResp(String id, String batchId, boolean processed, String response, long requestTime,
+                   long responseTime, String groupid) {
         this.id = id;
+        this.groupId = groupid;
         this.batchId = batchId;
         this.processed = processed;
         this.requestTime = requestTime;
         this.responseTime = responseTime;
         this.response = response;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     public long getRequestTime() {
@@ -65,11 +76,11 @@ public class ReqResp extends RealmObject {
         this.id = id;
     }
 
-    public int getBatchId() {
+    public String getBatchId() {
         return batchId;
     }
 
-    public void setBatchId(int batchId) {
+    public void setBatchId(String batchId) {
         this.batchId = batchId;
     }
 }

@@ -143,7 +143,7 @@ public class RealmClass {
         return list;
     }
 
-    public static ReqResp getBatchdata(int batchData) {
+    public static ReqResp getBatchdata(String batchData) {
         ReqResp reqResps = null;
         Realm realm = null;
         try {

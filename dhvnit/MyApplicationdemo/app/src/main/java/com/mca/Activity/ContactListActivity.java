@@ -1,7 +1,9 @@
 package com.mca.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.birbit.android.jobqueue.JobManager;
-import com.mca.Adapter.RecyclerAdapter;
+import com.mca.Adapter.ContactRecyclerAdapter;
 import com.mca.Adapter.SimpleDividerItemDecoration;
 import com.mca.Utils.Utils;
 import com.mca.Utils.Constants;
@@ -30,10 +32,11 @@ import io.realm.RealmChangeListener;
 public class ContactListActivity extends AppCompatActivity {
     RealmController realmController;
     RecyclerView recyclerView;
-    RecyclerAdapter adapter;
+    ContactRecyclerAdapter adapter;
     JobManager jobManager;
-    TextView contacts, noContacts;
+    TextView contacts, noContacts, tv_header_name;
     Toolbar toolbar;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +54,11 @@ public class ContactListActivity extends AppCompatActivity {
             }
         });
 
+        intent = getIntent();
+
         initView();
 
+        tv_header_name.setText(intent.getStringExtra("name"));
         contacts.setText(realmController.getItemsCount() + " " + Constants.contacts);
     }
 
@@ -69,24 +75,45 @@ public class ContactListActivity extends AppCompatActivity {
         jobManager = DemoApplication.getInstance().getJobManager();
         recyclerView = findViewById(R.id.recyclerView);
         contacts = findViewById(R.id.tv_contacts);
+        tv_header_name = findViewById(R.id.tv_header_name);
         noContacts = findViewById(R.id.no_contacts);
         realmController = RealmController.with(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(ContactListActivity.this));
         recyclerView.setHasFixedSize(true);
-        adapter = new RecyclerAdapter(ContactListActivity.this, realmController.getItems());
-        realmController.getRealm().addChangeListener(new RealmChangeListener<Realm>() {
-            @Override
-            public void onChange(Realm element) {
-                if (realmController.getItems() != null && realmController.getItems().size() > 0) {
-                    noContacts.setVisibility(View.GONE);
-                    adapter.notifyDataSetChanged();
-                    contacts.setText(realmController.getItemsCount() + " " + Constants.contacts);
-                } else {
-                    noContacts.setVisibility(View.VISIBLE);
+        if (intent.getStringExtra("groupId").length() < 4) {
+            adapter = new ContactRecyclerAdapter(ContactListActivity.this, realmController.getItems());
+            realmController.getRealm().addChangeListener(new RealmChangeListener<Realm>() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onChange(Realm element) {
+                    if (realmController.getItems() != null && realmController.getItems().size() > 0) {
+                        noContacts.setVisibility(View.GONE);
+                        adapter.notifyDataSetChanged();
+                        contacts.setText(realmController.getItemsCount() + " " + Constants.contacts);
+                    } else {
+                        noContacts.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            adapter = new ContactRecyclerAdapter(ContactListActivity.this,
+                    realmController.getItemGroup(intent.getStringExtra("groupId")));
+            realmController.getRealm().addChangeListener(new RealmChangeListener<Realm>() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onChange(Realm element) {
+                    if (realmController.getItems() != null && realmController.getItems().size() > 0) {
+                        noContacts.setVisibility(View.GONE);
+                        adapter.notifyDataSetChanged();
+                        contacts.setText(realmController.getItemGroupCount
+                                (intent.getStringExtra("groupId")) + " " + Constants.contacts);
+                    } else {
+                        noContacts.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+        }
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
         recyclerView.setAdapter(adapter);
     }
@@ -114,10 +141,12 @@ public class ContactListActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String query) {
                 // filter recycler view when text is changed
                 if (query.isEmpty()) {
-                    adapter = new RecyclerAdapter(ContactListActivity.this, realmController.getItems());
+                    adapter = new ContactRecyclerAdapter(ContactListActivity.this,
+                            realmController.getItems());
                     recyclerView.setAdapter(adapter);
                 } else {
-                    adapter = new RecyclerAdapter(ContactListActivity.this, RealmClass.searchItemData(query));
+                    adapter = new ContactRecyclerAdapter(ContactListActivity.this,
+                            RealmClass.searchItemData(query));
                     recyclerView.setAdapter(adapter);
                 }
                 return true;

@@ -107,6 +107,11 @@ public class RealmController {
         return realm.where(Item.class).count();
     }
 
+    public long getItemGroupCount(String id) {
+        return realm.where(Item.class).equalTo("group_id", id).count();
+    }
+
+
     public void editItem(final String itemId, final String name, final String number) {
 
         realm.executeTransactionAsync(new Realm.Transaction() {
@@ -161,6 +166,12 @@ public class RealmController {
                         .deleteFromRealm();
             }
         });
+    }
+
+    public RealmResults<Item> getItemGroup(String id) {
+        return realm.where(Item.class)
+                .equalTo("group_id", id)
+                .findAll();
     }
 
     public Event getEventId(String id) {

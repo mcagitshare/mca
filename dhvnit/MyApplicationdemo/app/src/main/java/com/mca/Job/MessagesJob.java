@@ -77,9 +77,10 @@ public class MessagesJob extends Job {
             }
 
             // Adding the message details.
-            MessageDetails messageDetails = new MessageDetails(id, DisplayMessage, new Date().getTime());
-            RealmClass.InsertMessageDetail(realm, messageDetails);
-
+            if (type != null && type.equals("normal")) {
+                MessageDetails messageDetails = new MessageDetails(id, DisplayMessage, new Date().getTime());
+                RealmClass.InsertMessageDetail(realm, messageDetails);
+            }
             // Adding parent.
             if (type != null && !type.equals("normal")) {
                 id = UUID.randomUUID().toString();

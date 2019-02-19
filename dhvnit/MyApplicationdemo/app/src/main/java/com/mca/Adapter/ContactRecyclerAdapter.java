@@ -24,12 +24,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
-public class RecyclerAdapter extends RealmRecyclerViewAdapter<Item, RecyclerAdapter.MyViewHolder> {
+public class ContactRecyclerAdapter extends RealmRecyclerViewAdapter<Item, ContactRecyclerAdapter.MyViewHolder> {
 
     private final ContactListActivity activity;
 
-    public RecyclerAdapter(ContactListActivity activity,
-                           OrderedRealmCollection<Item> data) {
+    public ContactRecyclerAdapter(ContactListActivity activity,
+                                  OrderedRealmCollection<Item> data) {
         super(data, true);
         this.activity = activity;
     }
@@ -105,6 +105,7 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<Item, RecyclerAdap
             public void onClick(View v) {
                 Intent intent = new Intent(activity, ContactDetails.class);
                 intent.putExtra("name", obj.getName());
+                intent.putExtra("Name", "Name");
                 intent.putExtra("phone", obj.getPhone());
                 intent.putExtra("image", obj.getImage());
                 intent.putExtra("id", obj.getId());
@@ -113,10 +114,11 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<Item, RecyclerAdap
         });
 
         holder.ll_acc_rej.setVisibility(View.GONE);
+        holder.item_unread_count.setVisibility(View.GONE);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView item_name, item_number;
+        private TextView item_name, item_number, item_unread_count;
         private ImageView edit;
         private CircleImageView image;
         private LinearLayout ll_header, ll_acc_rej;
@@ -129,6 +131,7 @@ public class RecyclerAdapter extends RealmRecyclerViewAdapter<Item, RecyclerAdap
             item_number = view.findViewById(R.id.item_number);
             edit = view.findViewById(R.id.iv_edit);
             ll_header = view.findViewById(R.id.ll_header);
+            item_unread_count = view.findViewById(R.id.item_unread_count);
         }
     }
 }
